@@ -1,10 +1,11 @@
 TARGET = s21_decimal
 TEST_TARGET = decimal_test
 
-CC = gcc -D MAC_OSc
+CC = gcc #-D MAC_OSc
 CFLAGS = -Wall -Werror -Wextra
-TST_LIBS = -lcheck -lm -lpthread
+#TST_LIBS = -lcheck -lm -lpthread
 
+LFLAGS:= $(shell pkg-config --cflags --libs check)
 OBJ_DIR = ./obj/
 OBJ = $(patsubst %.c, %.o, *.c)
 
