@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "../conversion/s21_conversion.h"
 #include "../utilits/s21_structures.h"
+#include "../utilits/simple_cases.h"
 
 START_TEST(NPR_from_int)
 {
@@ -41,10 +42,11 @@ END_TEST
 
 START_TEST(simple_from_float)
 {
-float test_float = 1.5;
+float test_float = 1.15;
 s21_decimal decimal;
 convertation_result status = s21_from_float_to_decimal(test_float, &decimal);
 ck_assert_int_eq(status, CONVERTATION_OK);
+
 }
 END_TEST
 
