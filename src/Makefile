@@ -5,16 +5,21 @@ CC = gcc -D MAC_OSc
 CFLAGS = -Wall -Werror -Wextra
 TST_LIBS = -lcheck -lm -lpthread
 
-INT = ./conversion/s21_from_int_to_decimal.c
-FLOAT = ./conversion/s21_from_float_to_decimal.c
+INT = "./conversion/s21_from_int_to_decimal.c"
+FLOAT = "./conversion/s21_from_float_to_decimal.c"
+SPACE = " "
 
+FILES = $(INT) \
+		$(FLOAT) \
+
+# LFLAGS:= $(shell pkg-config --cflags --libs check)
 OBJ_DIR = ./obj/
-OBJ = $(patsubst %.c, %.o, *.c)
+OBJ = (patsubst %.c, %.o, *.c)
 
 all: conversion_test
 
 conversion_test:
-	$(CC) $(CFLAGS) $(INT) $(FLOAT) ./tests/conversion_test.c $(TST_LIBS) -o ./tests/conversion_test
+	$(CC) $(CFLAGS) $(FILES) ./tests/conversion_test.c $(TST_LIBS) -o ./tests/conversion_test
 	./tests/conversion_test
 
 %.o: %.c
