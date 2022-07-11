@@ -2,7 +2,7 @@
 #include "../conversion/s21_conversion.h"
 #include "../utilits/s21_structures.h"
 
-#test NPR_from_int_to_decimal
+#test NPR_from_int
 int test_int = 0;
 s21_decimal *decimal = NULL;
 convertation_result status = s21_from_int_to_decimal(test_int, decimal);
@@ -12,4 +12,16 @@ ck_assert_int_eq(status, CONVERTATION_ERROR);
 int test_int = 0;
 s21_decimal decimal;
 convertation_result status = s21_from_int_to_decimal(test_int, &decimal);
+ck_assert_int_eq(status, CONVERTATION_OK);
+
+#test NPR_from_float
+float test_float = 0.0;
+s21_decimal *decimal = NULL;
+convertation_result status = s21_from_float_to_decimal(test_float, decimal);
+ck_assert_int_eq(status, CONVERTATION_ERROR);
+
+#test simple_from_float
+float test_float = 1.5;
+s21_decimal decimal;
+convertation_result status = s21_from_float_to_decimal(test_float, &decimal);
 ck_assert_int_eq(status, CONVERTATION_OK);

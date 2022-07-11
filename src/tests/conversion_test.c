@@ -9,7 +9,7 @@
 #include "../conversion/s21_conversion.h"
 #include "../utilits/s21_structures.h"
 
-START_TEST(NPR_from_int_to_decimal)
+START_TEST(NPR_from_int)
 {
 int test_int = 0;
 s21_decimal *decimal = NULL;
@@ -25,6 +25,26 @@ int test_int = 0;
 s21_decimal decimal;
 convertation_result status = s21_from_int_to_decimal(test_int, &decimal);
 ck_assert_int_eq(status, CONVERTATION_OK);
+
+}
+END_TEST
+
+START_TEST(NPR_from_float)
+{
+float test_float = 0.0;
+s21_decimal *decimal = NULL;
+convertation_result status = s21_from_float_to_decimal(test_float, decimal);
+ck_assert_int_eq(status, CONVERTATION_ERROR);
+
+}
+END_TEST
+
+START_TEST(simple_from_float)
+{
+float test_float = 1.5;
+s21_decimal decimal;
+convertation_result status = s21_from_float_to_decimal(test_float, &decimal);
+ck_assert_int_eq(status, CONVERTATION_OK);
 }
 END_TEST
 
@@ -36,8 +56,10 @@ int main(void)
     int nf;
 
     suite_add_tcase(s1, tc1_1);
-    tcase_add_test(tc1_1, NPR_from_int_to_decimal);
+    tcase_add_test(tc1_1, NPR_from_int);
     tcase_add_test(tc1_1, simple_from_int);
+    tcase_add_test(tc1_1, NPR_from_float);
+    tcase_add_test(tc1_1, simple_from_float);
 
     srunner_run_all(sr, CK_ENV);
     nf = srunner_ntests_failed(sr);
