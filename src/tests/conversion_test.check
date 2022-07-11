@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include "../conversion/s21_conversion.h"
+#include "../utilits/s21_structures.h"
+
+#test NPR_from_int_to_decimal
+int test_int = 0;
+s21_decimal *decimal = NULL;
+convertation_result status = s21_from_int_to_decimal(test_int, decimal);
+ck_assert_int_eq(status, CONVERTATION_ERROR);
+
+#test simple_from_int
+int test_int = 0;
+s21_decimal decimal;
+convertation_result status = s21_from_int_to_decimal(test_int, &decimal);
+ck_assert_int_eq(status, CONVERTATION_OK);

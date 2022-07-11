@@ -1,16 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "s21_conversion.h"
-
-int main() {
-    s21_decimal decimal;
-    s21_from_int_to_decimal(-1000000000,&decimal);
-    printf("value = %64llu\n", decimal.bits64[0]);
-}
+#include "../conversion/s21_conversion.h"
+#include "../utilits/s21_structures.h"
 
 int s21_from_int_to_decimal(int src, s21_decimal *dst) {
-    if (src < 0) dst->bits8[15] = 128; //TODO:
-    printf("%d\n", dst->bits8[15]);
-    dst->bits64[0] = (src < 0) ? -1 * src : src;
+    convertation_result status;
+    if (dst) {
+        status = CONVERTATION_OK;
+        if (src < 0) dst->bits8[15] = 128;
+        dst->bits64[0] = (src < 0) ? -1 * src : src;
+    } else {
+        status = CONVERTATION_ERROR;
+    }
+    return status;
 }
 
