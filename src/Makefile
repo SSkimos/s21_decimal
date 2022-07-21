@@ -1,19 +1,25 @@
-TARGET = s21_decimal
-TEST_TARGET = decimal_test
+CC      := gcc
+WARNING := -Wall -Werror -Wextra
+CFLAGS  := -std=c11 -pedantic $(WARNING)
 
-CC = gcc #-D MAC_OSc
-CFLAGS = -Wall -Werror -Wextra
-#TST_LIBS = -lcheck -lm -lpthread
+TARGET      := s21_decimal
+TEST_TARGET := decimal_test
 
-LFLAGS:= $(shell pkg-config --cflags --libs check)
-OBJ_DIR = ./obj/
-OBJ = $(patsubst %.c, %.o, *.c)
+# Use CLANGD
+LFLAGS  := $(shell pkg-config --cflags --libs check)
+OBJ_DIR := ./obj/
+DEC_OBJ := $(addprefix)
 
-all: conversion_test
+#all: conversion_test #comparsion_test
 
-conversion_test: s21_from_int_to_decimal_test
+all: s21_decimal.a test 
 
-s21_from_int_to_decimal_test: check
+s21_decimal.a: $(
+	$(CC) 
+
+test: consversion_test
+
+conversion_test:
 	$(CC) $(CFLAGS) ./conversion/s21_from_int_to_decimal.c ./tests/conversion_test.c $(TST_LIBS) -o ./tests/conversion_test
 	./tests/conversion_test
 
@@ -25,4 +31,8 @@ clean:
 
 check:
 	checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
+	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
+	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
+	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
+	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
 
