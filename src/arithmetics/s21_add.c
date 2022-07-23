@@ -1,9 +1,11 @@
 // i am trying to do basic integer addition. NO LOOKING AT EXPONENT!!
+// работает только для положительных чисел соответственно
 #include "s21_arithmetics.h"
 #include <stdio.h>
 #define S21_INTMAX 255  //(hotblack) i need it for some tests
 
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+
     int r = 0;
     for (int i = 0; i < 3; i++) {
         result -> bits[i] = value_1.bits[i] + value_2.bits[i];
@@ -23,6 +25,7 @@ int main(void) {
     dec1.bits[0] = 100;
     dec1.bits[1] = 100;
     dec1.bits[2] = 10;
+    dec1.bits[3] = 512;
 
     s21_decimal dec2;
     dec2.bits[0] = 100;
