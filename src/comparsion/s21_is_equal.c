@@ -1,13 +1,19 @@
 #include "s21_comparsion.h"
 
 int s21_is_equal(s21_decimal a, s21_decimal b) {
-    // if a == b return 1 else 0;
-    int not_equal = 0;
-    for (register int i = 0; i < 4; i++) {
+    int equal = 1;
+    int aSign = 0, bSign = 0;
+    if (a.bits[3] >= 80000000) aSign = 1;
+    if (b.bits[3] >= 80000000) bSign = 1;  // if their signs are not matching = they are ne
+    if (aSign != bSign) {
+        equal = 0;
+    } else {
+        for (register int i = 0; i <= 2; i++) {
         if (a.bits[i] != b.bits[i]) {
-            not_equal = 1;
+            equal = 0;
             break;
         }
     }
-    return (not_equal) ? 1 : 0;
+    }
+    return (equal);
 }
