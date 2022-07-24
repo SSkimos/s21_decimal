@@ -2,6 +2,7 @@ CC      := gcc
 WARNING := -Wall -Werror -Wextra
 CFLAGS  := -std=c11 -pedantic $(WARNING)
 
+<<<<<<< HEAD
 TARGET      := s21_decimal
 TEST_TARGET := decimal_test
 
