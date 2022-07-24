@@ -7,16 +7,18 @@ TST_LIBS = -lcheck -lm -lpthread
 
 INT = "./conversion/s21_from_int_to_decimal.c"
 FLOAT = "./conversion/s21_from_float_to_decimal.c"
+UTILITS = "./utilits/utilits.c"
 SPACE = " "
 
 FILES = $(INT) \
 		$(FLOAT) \
+		$(UTILITS)
 
 # LFLAGS:= $(shell pkg-config --cflags --libs check)
 OBJ_DIR = ./obj/
 OBJ = (patsubst %.c, %.o, *.c)
 
-all: conversion_test
+all: check conversion_test
 
 conversion_test:
 	$(CC) $(CFLAGS) $(FILES) ./tests/conversion_test.c $(TST_LIBS) -o ./tests/conversion_test
