@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../conversion/s21_conversion.h"
 #include "../utilits/s21_structures.h"
+#include "../utilits/simple_cases.h"
 #include "../utilits/utilits.h"
 
 #test NPR_from_int
@@ -45,3 +46,4 @@ float test_float = 1.5;
 s21_decimal decimal;
 convertation_result status = s21_from_float_to_decimal(test_float, &decimal);
 ck_assert_int_eq(status, CONVERTATION_OK);
+
