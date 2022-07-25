@@ -1,6 +1,6 @@
-CC      = gcc
-SRC_DIR  = .
-TEST_DIR = tests
+CC         = gcc
+SRC_DIR    = .
+TEST_DIR   = tests
 INC_DIRS  := $(shell find $(SRC_DIR) -type d)
 INC_FLAGS := $(addprefix -I, $(INC_DIRS))
 
@@ -8,15 +8,15 @@ SRC  := $(shell find $(SRC_DIR) -name "s21*.c" | sed -e 's/\.\///')
 TEST := $(shell find $(TEST_DIR) -name "*.c" | sed -e 's/\.\///')
 CHECK:= $(shell find $(TEST_DIR) -name "*.check" | sed -e 's/\/\///')
 
-BUILD_DIR  = obj
+BUILD_DIR      = obj
 BUILD_TEST_DIR = obj_test
 
 OBJS      := $(SRC:%.c=$(BUILD_DIR)/%.o)
 TEST_OBJS := $(TEST:%.c=$(BUILD_TEST_DIR)/%.o)
 
-WARNING = -Wall -Werror -Wextra
-CFLAGS  = $(INC_FLAGS) -std=c11 -pedantic $(WARNING)
-LFLAGS ?= $(shell pkg-config --cflags --libs check)
+WARNING  = -Wall -Werror -Wextra
+CFLAGS   = $(INC_FLAGS) -std=c11 -pedantic $(WARNING)
+LFLAGS  ?= $(shell pkg-config --cflags --libs check)
 
 
 all: s21_decimal.a test
