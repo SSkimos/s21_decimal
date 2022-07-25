@@ -5,37 +5,6 @@
 #include "../utilits/simple_cases.h"
 #include "../utilits/utilits.h"
 
-#test NPR_from_int
-int test_int = 0;
-s21_decimal *decimal = NULL;
-convertation_result status = s21_from_int_to_decimal(test_int, decimal);
-ck_assert_int_eq(status, CONVERTATION_ERROR);
-if (status == CONVERTATION_ERROR) {
-    printf("=== === === ===\n");
-    printf("NPR_from_int DONE\n");
-    printf("=== === === ===\n\n");
-} else {
-    printf("=== === === ===\n");
-    printf("NPR_from_int ERROR\n");
-    printf("=== === === ===\n\n");
-}
-
-#test simple_from_int
-int test_int = -1;
-s21_decimal decimal;
-init_decimal(&decimal);
-convertation_result status = s21_from_int_to_decimal(test_int, &decimal);
-ck_assert_int_eq(status, CONVERTATION_OK);
-if (status == CONVERTATION_OK) {
-    printf("=== === === ===\n");
-    printf("simple_from_int DONE\n");
-    printf("=== === === ===\n\n");
-} else {
-    printf("=== === === ===\n");
-    printf("NPR_from_int ERROR\n");
-    printf("=== === === ===\n\n");
-}
-
 #test is_equal_simple
 s21_decimal decimal;
 s21_decimal second_decimal;
@@ -44,18 +13,5 @@ init_decimal(&second_decimal);
 int A = 5123;
 convertation_result status = s21_from_int_to_decimal(A, &decimal);
 convertation_result second_status = s21_from_int_to_decimal(A, &second_decimal);
-ck_assert_int_eq(1, s21_is_equal(decimal, second_decimal);
-
-
-#test NPR_from_float
-float test_float = 0.0;
-s21_decimal *decimal = NULL;
-convertation_result status = s21_from_float_to_decimal(test_float, decimal);
-ck_assert_int_eq(status, CONVERTATION_ERROR);
-
-#test simple_from_float
-float test_float = 1.5;
-s21_decimal decimal;
-convertation_result status = s21_from_float_to_decimal(test_float, &decimal);
-ck_assert_int_eq(status, CONVERTATION_OK);
+ck_assert_int_eq(1, s21_is_equal(decimal, second_decimal));
 
