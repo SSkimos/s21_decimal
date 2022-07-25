@@ -1,7 +1,6 @@
 #ifndef SRC_S21_COMPARSION_H_
 #define SRC_S21_COMPARSION_H_
 
-#define MINUS_SIGN 4294967295;
 #include "../utilits/s21_structures.h"
 
 #include <stdint.h>
