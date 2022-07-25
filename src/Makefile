@@ -1,39 +1,34 @@
-CC      := gcc
-WARNING := -Wall -Werror -Wextra
-CFLAGS  := -std=c11 -pedantic $(WARNING)
+CC      = gcc
+WARNING = -Wall -Werror -Wextra
 
-<<<<<<< HEAD
-TARGET      := s21_decimal
-TEST_TARGET := decimal_test
+SRC_DIR = .
 
-# Use CLANGD
-LFLAGS  := $(shell pkg-config --cflags --libs check)
-OBJ_DIR := ./obj/
-DEC_OBJ := $(addprefix)
+BUILD_DIR  = obj
 
-#all: conversion_test #comparsion_test
+SRC := $(shell find $(SRC_DIR) -name "s21*.c")
+OBJS:= $(SRC:%=$(BUILD_DIR)/%.o)
 
-all: s21_decimal.a test 
+INC_DIRS := $(shell find $(SRC_DIR) -type d)
+INC_FLAGS := $(addprefix -I, $(INC_DIRS))
 
-s21_decimal.a: $(
-	$(CC) 
+CFLAGS  = $(INC_FLAGS) -std=c11 -pedantic $(WARNING)
 
-test: consversion_test
+all: s21_decimal.a check
 
-conversion_test:
-	$(CC) $(CFLAGS) ./conversion/s21_from_int_to_decimal.c ./tests/conversion_test.c $(TST_LIBS) -o ./tests/conversion_test
-	./tests/conversion_test
+s21_decimal.a: $(OBJS)
+	@mkdir -p $(BUILD_DIR)
+	ar rc s21_decimal.a $(OBJS)
+	ranlib s21_decimal.a
 
-%.o: %.c
-	$(CC) -c $< -o $@
-
-clean:
-	rm $(TEST_TARGET) *.o
+$(BUILD_DIR)/%.c.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC)  -c $< -o $@
 
 check:
-	checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
-	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
-	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
-	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
-	@# checkmk clean_mode=1 ./tests/conversion_test.check > ./tests/conversion_test.c
+	checkmk clean_mode=1 tests/conversion_test.check > tests/conversion_test.c
+	checkmk clean_mode=1 tests/comparsion_test.check > tests/comparsion_test.c
 
+clean: 
+	rm -f $(OBJS)	
+
+rebuild: clean all
