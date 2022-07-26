@@ -50,5 +50,8 @@ clean:
 	rm -r $(BUILD_DIR)
 	rm tests/*.c
 
-rebuild: clean all
+clean_lib:
+	rm s21_decimal.a
+
+rebuild: clean clean_lib all
 
