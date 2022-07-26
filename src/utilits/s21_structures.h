@@ -1,5 +1,5 @@
-#ifndef UTILITS_S21_STRUCTURES_H_
-#define UTILITS_S21_STRUCTURES_H_
+#ifndef SRC_UTILITS_S21_STRUCTURES_H_
+#define SRC_UTILITS_S21_STRUCTURES_H_
 
 #define MINUS_SIGN 4294967295
 
@@ -19,4 +19,4 @@ typedef enum {
     CONVERTATION_ERROR = 1
 } convertation_result;
 
-#endif
+#endif  // SRC_UTILITS_S21_STRUCTURES_H_

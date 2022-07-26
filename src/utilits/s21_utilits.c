@@ -5,3 +5,4 @@ void init_decimal(s21_decimal *decimal) {
         decimal->bits[i] = 0;
     }
 }
+

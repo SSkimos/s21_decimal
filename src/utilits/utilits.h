@@ -1,5 +1,5 @@
-#ifndef UTILITS_S21_DECIMAL_H_
-#define UTILITS_S21_DECIMAL_H_
+#ifndef SRC_UTILITS_UTILITS_H_
+#define SRC_UTILITS_UTILITS_H_
 
 #include "s21_structures.h"
 #include <stdio.h>
@@ -7,4 +7,4 @@
 
 void init_decimal(s21_decimal *decimal);
 
-#endif // UTILITS_S21_DECIMAL_H_
+#endif  // SRC_UTILITS_UTILITS_H_

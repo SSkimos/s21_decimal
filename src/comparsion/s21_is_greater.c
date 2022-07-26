@@ -1,6 +1,6 @@
 #include "s21_comparsion.h"
 
-int s21_is_greater(s21_decimal a, s21_decimal b) { 
+int s21_is_greater(s21_decimal a, s21_decimal b) {
     int greater = 0;
     int aSign = 0, bSign = 0;
     if (a.bits[3] >= MINUS_SIGN) {
@@ -19,10 +19,9 @@ int s21_is_greater(s21_decimal a, s21_decimal b) {
             if (a.bits[i] > b.bits[i]) {
                 greater = 1;
                 break;
-            } else if (a.bits [i] < b.bits[i]) {
-                greater = 1;
+            } else if (a.bits[i] < b.bits[i]) {
+                greater = 0;
                 break;
-
             }
         }
     }
