@@ -2,12 +2,13 @@
 #define UTILITS_S21_STRUCTURES_H_
 
 typedef struct {
-    int bits[4];
+    unsigned int bits[4];
 } s21_decimal;
 
+#include <stdbool.h>
 typedef struct {
-    int bits[24];
-    int sign;
+    bool bits[96];
+    bool sign;
     int exp;
 } s21_decimal_alt;
 
