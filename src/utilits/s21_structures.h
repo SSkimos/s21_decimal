@@ -2,8 +2,14 @@
 #define UTILITS_S21_STRUCTURES_H_
 
 typedef struct {
-    unsigned int bits[4];
+    int bits[4];
 } s21_decimal;
+
+typedef struct {
+    int bits[24];
+    int sign;
+    int exp;
+} s21_decimal_alt;
 
 typedef enum {
     OPERATION_OK = 0,
