@@ -4,16 +4,15 @@
 #include <limits.h>
 
 bool s21_get_bit(unsigned int num, int pos) {
-    return num >> pos & 1;
+    return (num >> pos) & 1;
 }
 
 bool s21_get_sign(s21_decimal dec) {
     return s21_get_bit(dec.bits[3], 31);
 }
 
-// there may be an error but i havent found one!
 int s21_get_exp(s21_decimal dec) {
-    return dec.bits[3] >> 16 % 2147483648;
+    return (dec.bits[3] >> 16) % 2147483648;
 }
 
 // this function is used for testing purposes
@@ -35,7 +34,6 @@ void s21_null_decimal(s21_decimal *std) {
     std -> bits[3] = 0;
 }
 
-// this function is working correctly
 s21_decimal_alt s21_convert_std_to_alt(s21_decimal std) {
     s21_decimal_alt alt;
     alt.sign = s21_get_sign(std);
@@ -48,14 +46,14 @@ s21_decimal_alt s21_convert_std_to_alt(s21_decimal std) {
     return alt;
 }
 
-// this function is not
 s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt) {
     s21_decimal std;
     s21_null_decimal(&std);
-    int k = 96;
+    int k = 95;
     for (int i = 2; i >= 0; i--) {
         for (int j = 31; j >= 0; j--) {
-            std.bits[i] = std.bits[i] << 1 + alt.bits[k--];
+            std.bits[i] = (std.bits[i] << 1) + alt.bits[k--];
+            printf("%i ", std.bits[i]);
         }
     }
     return std;
