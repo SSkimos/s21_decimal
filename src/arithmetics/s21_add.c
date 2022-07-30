@@ -131,7 +131,12 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             if (t_bit == 1)
                 return 1;  // произошло переполнение
         }  // else домножение меньшего числа на 10 и уменьшение экспоненты
-    }  // else вычитание вместо сложения
+    } else { // else вычитание вместо сложения
+        if (alt_value_1.sign) {
+            alt_value_1.sign = 0;
+            s21_sub(value_1, value_2, &value_3);
+        }
+    }
     *result = s21_convert_alt_to_std(alt_value_3);
     return 0;
 }
