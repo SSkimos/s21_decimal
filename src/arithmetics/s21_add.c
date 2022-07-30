@@ -101,37 +101,58 @@ s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt) {
     return std;
 }
 
-
-int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    int return_code = 0;
     s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(value_1);
     s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(value_2);
-    s21_decimal_alt alt_value_3;
-    s21_null_decimal_alt(&alt_value_3);
+    s21_decimal_alt alt_result;
+    s21_null_decimal_alt(&alt_result);
+    if (alt_value_1.sign == alt_value_2.sign) {
+        // завтра напишу вычитание
+    } else {
+        alt_value_2.sign = alt_value_2.sign ^ 1;
+        value_2 = s21_convert_alt_to_std(alt_value_2);
+        return_code = s21_add(value_1, value_2, &result);
+    }
+    return return_code;
+}
+
+int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    int return_code = 0;
+    s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(value_1);
+    s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(value_2);
+    s21_decimal_alt alt_result;
+    s21_null_decimal_alt(&alt_result);
     if (alt_value_1.sign == alt_value_2.sign) {
         if (alt_value_1.exp == alt_value_2.exp) {
             int t_bit = 0;  // бит переноса
             for (int i = 0; i < 96; i++) {
-                // нужно попробовать максимально упростить это выражение
-                // "если хотя бы два бита из трех равны единице"
-                alt_value_3.bits[i] = \
+                alt_result.bits[i] = \
                 alt_value_1.bits[i] ^ alt_value_2.bits[i] ^ t_bit;
                 t_bit = 0;
+                // нужно попробовать максимально упростить это выражение
                 if ((alt_value_1.bits[i] & alt_value_2.bits[i]) || \
                 (alt_value_1.bits[i] & t_bit) || \
                 (alt_value_2.bits[i] & t_bit))
+                // "если хотя бы два бита из трех равны единице"
                     t_bit = 1;
             }
             if (t_bit == 1)
-                return 1;  // произошло переполнение
+                return_code = 0;  // произошло переполнение
         }  // else домножение меньшего числа на 10 и уменьшение экспоненты
-    } else { // else вычитание вместо сложения
+    } else {  // else вычитание вместо сложения
         if (alt_value_1.sign) {
             alt_value_1.sign = 0;
-            s21_sub(value_1, value_2, &value_3);
+            value_1 = s21_convert_alt_to_std(alt_value_1);
+            return_code = s21_sub(value_2, value_1, &value_3);
+        } else {
+            alt_value_2.sign = 0;
+            value_2 = s21_convert_alt_to_std(alt_value_2);
+            return_code = s21_sub(value_1, value_2, &value_3);     
         }
     }
-    *result = s21_convert_alt_to_std(alt_value_3);
-    return 0;
+    *result = s21_convert_alt_to_std(alt_result);
+    return return_code;
 }
 
 int main(void) {
