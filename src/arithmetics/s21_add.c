@@ -1,10 +1,5 @@
-// i am trying to do basic integer addition. NO LOOKING AT EXPONENT!!
-// работает только для положительных чисел соответственно
-// #include "s21_arithmetics.h"
 #include <stdio.h>
-
 #include "../utilits/s21_structures.h"
-// #define S21_INTMAX 255  //(hotblack) i need it for some tests
 
 // достает нужный бит из инта
 // требуется для опроеделения знака стандартного децимала
@@ -113,9 +108,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_decimal_alt alt_value_3;
     s21_null_decimal_alt(&alt_value_3);
     if (alt_value_1.sign == alt_value_2.sign) {
-        // printf("a\n");
         if (alt_value_1.exp == alt_value_2.exp) {
-            // printf("b\n");
             int t_bit = 0;  // бит переноса
             for (int i = 0; i < 96; i++) {
                 // нужно попробовать максимально упростить это выражение
