@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../utilits/s21_structures.h"
 
+int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 // достает нужный бит из инта
 // требуется для опроеделения знака стандартного децимала
 // и вывода стандартного и альтернативного децимала в двоичной форме
@@ -78,7 +79,8 @@ s21_decimal_alt s21_convert_std_to_alt(s21_decimal std) {
 // преобразование альтернативного децимала
 // протестировано, работает с корректными децималами
 // поломается на децимале со слишком большим положением точки
-// скорее всего, возниконовение такого децимала нужно предусматривать в вычислительных функциях 
+// скорее всего, возниконовение такого децимала нужно
+// будет предусматривать в вычислительных функциях
 s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt) {
     s21_decimal std;
     s21_null_decimal(&std);
@@ -108,12 +110,35 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_decimal_alt alt_result;
     s21_null_decimal_alt(&alt_result);
     if (alt_value_1.sign == alt_value_2.sign) {
-        // завтра напишу вычитание
-    } else {
-        alt_value_2.sign = alt_value_2.sign ^ 1;
-        value_2 = s21_convert_alt_to_std(alt_value_2);
-        return_code = s21_add(value_1, value_2, &result);
-    }
+        //if (alt_value_1.exp = alt_value_2.exp) {
+            // there if no is_less_or_equal yet
+            // if (s21_is_greater_or_equal(value_1, value_2) && \
+            // alt_value_1.sign == 0 || s21_is_less_or_equal(value_1, value_2) \
+            // && alt_value_1.sign == 1) {
+                // нормальные побитовые вычисления
+                bool t_bit = 0;
+                for (int i = 0; i < 96; i++) {
+                    alt_result.bits[i] = \
+                    alt_value_1.bits[i] ^ alt_value_2.bits[i] ^ t_bit;
+                    if (alt_value_1.bits[i] == 0 && alt_value_2.bits[i] == 1)
+                        t_bit = 1;
+                    else if (alt_value_1.bits[i] == 1 && alt_value_2.bits[i] == 0)
+                        t_bit = 0;
+                }
+            // } else {
+            //     alt_value_1.sign = alt_value_1.sign ^ 1;
+            //     alt_value_2.sign = alt_value_2.sign ^ 1;
+            //     value_1 = s21_convert_alt_to_std(alt_value_2);
+            //     value_2 = s21_convert_alt_to_std(alt_value_1);
+            //     return_code = s21_sub(value_1, value_2, result);
+            // }
+        }  // else приведение к большему
+    // } else {
+    //     alt_value_2.sign = alt_value_2.sign ^ 1;
+    //     value_2 = s21_convert_alt_to_std(alt_value_2);
+    //     return_code = s21_add(value_1, value_2, result);
+    // }
+    *result = s21_convert_alt_to_std(alt_result);
     return return_code;
 }
 
@@ -125,7 +150,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_null_decimal_alt(&alt_result);
     if (alt_value_1.sign == alt_value_2.sign) {
         if (alt_value_1.exp == alt_value_2.exp) {
-            int t_bit = 0;  // бит переноса
+            bool t_bit = 0;  // бит переноса
             for (int i = 0; i < 96; i++) {
                 alt_result.bits[i] = \
                 alt_value_1.bits[i] ^ alt_value_2.bits[i] ^ t_bit;
@@ -144,11 +169,11 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         if (alt_value_1.sign) {
             alt_value_1.sign = 0;
             value_1 = s21_convert_alt_to_std(alt_value_1);
-            return_code = s21_sub(value_2, value_1, &value_3);
+            return_code = s21_sub(value_2, value_1, result);
         } else {
             alt_value_2.sign = 0;
             value_2 = s21_convert_alt_to_std(alt_value_2);
-            return_code = s21_sub(value_1, value_2, &value_3);     
+            return_code = s21_sub(value_1, value_2, result);
         }
     }
     *result = s21_convert_alt_to_std(alt_result);
@@ -158,25 +183,31 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
 int main(void) {
     s21_decimal dec1;
     s21_null_decimal(&dec1);
-    dec1.bits[0] = 100;
+    dec1.bits[0] = 0;
     dec1.bits[1] = 100;
     dec1.bits[2] = 10;
 
     s21_decimal dec2;
     s21_null_decimal(&dec2);
-    dec2.bits[0] = 100;
-    dec2.bits[1] = 100;
-    dec2.bits[2] = 10;
+    dec2.bits[0] = 1;
+    dec2.bits[1] = 0;
+    dec2.bits[2] = 0;
+    dec2.bits[3] = 0;
 
     s21_decimal dec3;
     s21_null_decimal(&dec3);
-    dec3.bits[0] = 0;
-    dec3.bits[1] = 0;
-    dec3.bits[2] = 0;
 
-    int i = s21_add(dec1, dec2, &dec3);
+    s21_decimal dec4;
+    s21_null_decimal(&dec4);
+
+    // int i = s21_add(dec1, dec2, &dec3);
+    // print_binary_representation_std(dec1);
+    // print_binary_representation_std(dec2);
+    // print_binary_representation_std(dec3);
+    int a = s21_sub(dec1, dec2, &dec4);
     print_binary_representation_std(dec1);
     print_binary_representation_std(dec2);
-    print_binary_representation_std(dec3);
+    print_binary_representation_std(dec4);
     return 0;
 }
+
