@@ -9,6 +9,18 @@ bool s21_get_bit_int(unsigned int num, int pos) {
     return (num >> pos) & 1;
 }
 
+bool s21_right_shift(s21_decimal_alt *alt) {
+    bool return_code = 0;
+    if (alt -> bits[95] == 1) {
+        return_code = 1;
+    } else {
+        for (int i = 95; i > 0; i--) {
+            alt -> bits[i] = alt -> bits[i - 1];
+        }
+    }
+    return return_code;
+}
+
 // достает знак из стандартного децимала
 // нужна в преобразовании в альтернативную форму
 bool s21_get_sign_std(s21_decimal dec) {
@@ -18,7 +30,7 @@ bool s21_get_sign_std(s21_decimal dec) {
 // достает положение точки из стандартного децимала
 // нужна в преобразовании в альтернативную форму
 int s21_get_exp_std(s21_decimal dec) {
-    return (dec.bits[3] >> 16) % 2147483648;
+    return (dec.bits[3] % 2147483648) >> 16;
 }
 
 // распечатка бинарной формы стандартного децимала
@@ -110,7 +122,7 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_decimal_alt alt_result;
     s21_null_decimal_alt(&alt_result);
     if (alt_value_1.sign == alt_value_2.sign) {
-        //if (alt_value_1.exp = alt_value_2.exp) {
+        // if (alt_value_1.exp = alt_value_2.exp) {
             // there if no is_less_or_equal yet
             // if (s21_is_greater_or_equal(value_1, value_2) && \
             // alt_value_1.sign == 0 || s21_is_less_or_equal(value_1, value_2) \
@@ -122,7 +134,8 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
                     alt_value_1.bits[i] ^ alt_value_2.bits[i] ^ t_bit;
                     if (alt_value_1.bits[i] == 0 && alt_value_2.bits[i] == 1)
                         t_bit = 1;
-                    else if (alt_value_1.bits[i] == 1 && alt_value_2.bits[i] == 0)
+                    else if (alt_value_1.bits[i] == 1 && \
+                    alt_value_2.bits[i] == 0)
                         t_bit = 0;
                 }
             // } else {
@@ -180,19 +193,51 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     return return_code;
 }
 
+int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    int return_code = 0;
+    s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(value_1);
+    s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(value_2);
+    s21_decimal_alt alt_result;
+    s21_null_decimal_alt(&alt_result);
+    int exp1 = alt_value_1.exp;
+    int exp2 = alt_value_2.exp;
+    alt_value_1.exp = 0;
+    alt_value_2.exp = 0;
+    int sign1 = alt_value_1.sign;
+    int sign2 = alt_value_2.sign;
+    alt_value_1.sign = 0;
+    alt_value_2.sign = 0;
+    s21_null_decimal_alt(&alt_result);
+    for (int i = 0; i < 96; i++) {
+        if (alt_value_2.bits[i] == 1) {
+            *result = s21_convert_alt_to_std(alt_result);
+            value_1 = s21_convert_alt_to_std(alt_value_1);
+            value_2 = s21_convert_alt_to_std(alt_value_2);
+            s21_add(*result, value_1, result);
+            alt_result = s21_convert_std_to_alt(*result);
+        }
+        s21_right_shift(&alt_value_1);
+    }
+    alt_result.exp = exp1 + exp2;
+    alt_result.sign = sign1 ^ sign2;
+    *result = s21_convert_alt_to_std(alt_result);
+    return return_code;
+}
+
 int main(void) {
     s21_decimal dec1;
     s21_null_decimal(&dec1);
-    dec1.bits[0] = 0;
-    dec1.bits[1] = 100;
-    dec1.bits[2] = 10;
+    dec1.bits[0] = 10;
+    dec1.bits[1] = 0;
+    dec1.bits[2] = 0;
+    dec1.bits[3] = 196608;
 
     s21_decimal dec2;
     s21_null_decimal(&dec2);
-    dec2.bits[0] = 1;
+    dec2.bits[0] = 10;
     dec2.bits[1] = 0;
     dec2.bits[2] = 0;
-    dec2.bits[3] = 0;
+    dec2.bits[3] = 2147549184;
 
     s21_decimal dec3;
     s21_null_decimal(&dec3);
@@ -204,10 +249,11 @@ int main(void) {
     // print_binary_representation_std(dec1);
     // print_binary_representation_std(dec2);
     // print_binary_representation_std(dec3);
-    int a = s21_sub(dec1, dec2, &dec4);
+    // print_binary_representation_std(dec4);
     print_binary_representation_std(dec1);
     print_binary_representation_std(dec2);
+    int a = s21_mul(dec1, dec2, &dec4);
     print_binary_representation_std(dec4);
+
     return 0;
 }
-
