@@ -308,24 +308,22 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
 int s21_rescale(s21_decimal *value_1, s21_decimal *value_2) {
     s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(*value_1);
     s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(*value_2);
-    s21_decimal ten1;
-    s21_null_decimal(&ten1);
-    ten1.bits[0] = 10;
-    s21_decimal_alt ten;
-    s21_null_decimal_alt(&ten);
-    ten = s21_convert_std_to_alt(ten1);
+    s21_decimal ten;
+    s21_null_decimal(&ten);
+    ten.bits[0] = 10;
     int exp_dif;
     if (alt_value_1.exp > alt_value_2.exp) {
         exp_dif = alt_value_1.exp - alt_value_2.exp;
         for (int i = 0; i < exp_dif; i++) {
-            s21_mul(*value_2, ten1, value_2);
+            s21_mul(*value_2, ten, value_2);
             alt_value_2 = s21_convert_std_to_alt(*value_2);
         }
         alt_value_2.exp = alt_value_1.exp;
     } else if (alt_value_2.exp > alt_value_1.exp) {
         exp_dif = alt_value_2.exp - alt_value_1.exp;
         for (int i = 0; i < exp_dif; i++) {
-            s21_mul_alt(alt_value_1, ten, &alt_value_1);
+            s21_mul(*value_1, ten, value_1);
+            alt_value_1 = s21_convert_std_to_alt(*value_1);
         }
         alt_value_1.exp = alt_value_2.exp;
     }
