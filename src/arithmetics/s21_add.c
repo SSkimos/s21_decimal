@@ -176,6 +176,7 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
 // (требуется is_less_or_equal, is_more_or_equal)
 int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int return_code = 0;
+    s21_rescale(&value_1, &value_2);
     s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(value_1);
     s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(value_2);
     s21_decimal_alt alt_result;
@@ -244,9 +245,9 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_decimal_alt alt_result;
     s21_null_decimal_alt(&alt_result);
     if (alt_value_1.sign == alt_value_2.sign) {
-        if (alt_value_1.exp == alt_value_2.exp) {
+        // if (alt_value_1.exp == alt_value_2.exp) {
             return_code = s21_add_alt(alt_value_1, alt_value_2, &alt_result);
-        }  // else домножение меньшего числа на 10 и уменьшение экспоненты
+        // }
     } else {  // else вычитание вместо сложения
         if (alt_value_1.sign) {
             alt_value_1.sign = 0;
@@ -300,6 +301,10 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     return return_code;
 }
 
+
+// простейший рескейл. нужно будет разбить на две функции,
+// подключить округление при переполнении
+// и выдачу ошибки при совсем переполнении
 int s21_rescale(s21_decimal *value_1, s21_decimal *value_2) {
     s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(*value_1);
     s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(*value_2);
@@ -341,6 +346,7 @@ int main(void) {
     dec2.bits[0] = 1637;
     dec2.bits[1] = 0;
     dec2.bits[2] = 0;
+    dec2.bits[3] = 65536;
     // dec2.bits[3] = 196608;
     // dec2.bits[3] = 2147549184;
     // dec2.bits[3] = 2147483648;
@@ -355,7 +361,7 @@ int main(void) {
     print_binary_representation_std_s(dec1);
     print_binary_representation_std_s(dec2);
     s21_rescale(&dec1, &dec2);
-    int i = s21_add(dec1, dec2, &dec3);
+    int i = s21_sub(dec2, dec1, &dec3);
     print_binary_representation_std_s(dec1);
     print_binary_representation_std_s(dec2);
     print_binary_representation_std_s(dec3);
@@ -373,7 +379,3 @@ int main(void) {
     // print_binary_representation_alt_s(alt3);
     return 0;
 }
-
-// res: 000000000101101100000
-// alt: 000000010110110000000
-// res: 000000011010011100000
