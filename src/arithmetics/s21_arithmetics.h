@@ -25,4 +25,6 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
 int s21_mul_alt(s21_decimal_alt alt_value_1, \
 s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
 int s21_rescale(s21_decimal *value_1, s21_decimal *value_2);
+int s21_rescale_alt(s21_decimal_alt *alt_value_1, \
+s21_decimal_alt *alt_value_2);
 #endif
