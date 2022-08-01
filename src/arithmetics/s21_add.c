@@ -1,25 +1,6 @@
 #include <stdio.h>
 #include "../utilits/s21_structures.h"
-
-bool s21_get_bit_int(unsigned int num, int pos);
-bool s21_right_shift(s21_decimal_alt *alt);
-bool s21_get_sign_std(s21_decimal dec);
-int s21_get_exp_std(s21_decimal dec);
-void print_binary_representation_std(s21_decimal std);
-void print_binary_representation_alt(s21_decimal_alt alt);
-void s21_null_decimal(s21_decimal *std);
-void s21_null_decimal_alt(s21_decimal_alt *alt);
-s21_decimal_alt s21_convert_std_to_alt(s21_decimal std);
-s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt);
-int s21_sub_alt(s21_decimal_alt alt_value_1, \
-s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
-int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-int s21_add_alt(s21_decimal_alt alt_value_1, \
-s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
-int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-int s21_mul_alt(s21_decimal_alt alt_value_1, \
-s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
-int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+#include "s21_arithmetics.h"
 
 
 // достает нужный бит из инта
@@ -29,6 +10,19 @@ bool s21_get_bit_int(unsigned int num, int pos) {
     return (num >> pos) & 1;
 }
 
+// сдвиг влево для альтернативного децимала
+// пока что нигде не используется
+bool s21_left_shift(s21_decimal_alt *alt) {
+    bool return_code = 0;
+    if (alt -> bits[0] == 1)
+        return_code = 1;
+        // число было нечетным
+    for (int i = 0; i < 96; i++)
+        alt -> bits[i] = alt -> bits[i + 1];
+    alt -> bits[95] = 0;
+    return return_code;
+}
+
 // сдвиг вправо для альтернативного децимала
 // нужно при умножении
 bool s21_right_shift(s21_decimal_alt *alt) {
@@ -36,9 +30,8 @@ bool s21_right_shift(s21_decimal_alt *alt) {
     if (alt -> bits[95] == 1) {
         return_code = 1;
     } else {
-        for (int i = 95; i > 0; i--) {
+        for (int i = 95; i > 0; i--)
             alt -> bits[i] = alt -> bits[i - 1];
-        }
         alt -> bits[0] = 0;
     }
     return return_code;
@@ -77,7 +70,7 @@ void print_binary_representation_std(s21_decimal std) {
 void print_binary_representation_alt(s21_decimal_alt alt) {
     for (int i = 95; i >= 0; i--)
         printf("%i", alt.bits[i]);
-    printf(" %i %i", alt.sign, alt.exp);
+    printf(" %i %i\n", alt.sign, alt.exp);
 }
 
 // зануление стандартного децимала
@@ -312,6 +305,10 @@ int main(void) {
     print_binary_representation_std(dec1);
     print_binary_representation_std(dec2);
     print_binary_representation_std(dec3);
+    s21_decimal_alt de1_alt = s21_convert_std_to_alt(dec1);
+    print_binary_representation_alt(de1_alt);
+    s21_left_shift(&de1_alt);
+    print_binary_representation_alt(de1_alt);
     // // print_binary_representation_std(dec4);
     // // print_binary_representation_std(dec1);
     // // print_binary_representation_std(dec2);
