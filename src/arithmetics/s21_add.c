@@ -4,7 +4,7 @@
 
 
 // достает нужный бит из инта
-// требуется для опроеделения знака стандартного децимала
+// требуется для определения знака стандартного децимала
 // и вывода стандартного и альтернативного децимала в двоичной форме
 bool s21_get_bit_int(unsigned int num, int pos) {
     return (num >> pos) & 1;
@@ -53,10 +53,10 @@ int s21_get_exp_std(s21_decimal dec) {
 // распечатываются склеенные второй, первый и нулевой бит
 // и через пробел -- третий бит
 void print_binary_representation_std(s21_decimal std) {
-    for (int i = 2; i >= 0; i--) {
+    for (int i = 2; i >= 0; i--)
         for (int j = 31; j >= 0; j--)
+            // printf("%i", s21_get_bit_int(std.bits[0], j));
             printf("%i", s21_get_bit_int(std.bits[i], j));
-    }
     printf(" ");
     for (int j = 31; j >= 0; j--)
         printf("%i", s21_get_bit_int(std.bits[3], j));
@@ -69,6 +69,7 @@ void print_binary_representation_std(s21_decimal std) {
 // и положение точки
 void print_binary_representation_alt(s21_decimal_alt alt) {
     for (int i = 95; i >= 0; i--)
+    // for (int i = 20; i >= 0; i--)
         printf("%i", alt.bits[i]);
     printf(" %i %i\n", alt.sign, alt.exp);
 }
@@ -197,15 +198,19 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     int return_code = 0;
     bool t_bit = 0;  // бит переноса
     for (int i = 0; i < 96; i++) {
+    // for (int i = 0; i < 16; i++) {
+        // printf("%i %i %i ", alt_value_1.bits[i], alt_value_2.bits[i], t_bit);
         alt_result -> bits[i] = \
-        alt_value_1.bits[i] ^ alt_value_2.bits[i] ^ t_bit;
-        t_bit = 0;
+        (alt_value_1.bits[i] ^ alt_value_2.bits[i]) ^ t_bit;
+        // printf("%i\n", alt_result -> bits[i]);
         // нужно попробовать максимально упростить это выражение
         if ((alt_value_1.bits[i] & alt_value_2.bits[i]) || \
         (alt_value_1.bits[i] & t_bit) || \
         (alt_value_2.bits[i] & t_bit))
         // "если хотя бы два бита из трех равны единице"
             t_bit = 1;
+        else
+            t_bit = 0;
     }
     if (t_bit == 1)
         return_code = 1;  // произошло переполнение
@@ -254,9 +259,8 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     alt_value_1.sign = 0;
     alt_value_2.sign = 0;
     for (int i = 0; i < 96; i++) {
-        if (alt_value_2.bits[i] == 1) {
+        if (alt_value_2.bits[i] == 1)
             s21_add_alt(*alt_result, alt_value_1, alt_result);
-        }
         s21_right_shift(&alt_value_1);
     }
     alt_result -> exp = exp1 + exp2;
@@ -282,18 +286,19 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
 int main(void) {
     s21_decimal dec1;
     s21_null_decimal(&dec1);
-    dec1.bits[0] = 100;
+    dec1.bits[0] = 11648;
     dec1.bits[1] = 0;
     dec1.bits[2] = 0;
-    // dec1.bits[3] = 196608;
+    //dec1.bits[3] = 196608;
 
     s21_decimal dec2;
     s21_null_decimal(&dec2);
-    dec2.bits[0] = 10;
+    dec2.bits[0] = 100;
     dec2.bits[1] = 0;
     dec2.bits[2] = 0;
+    dec1.bits[3] = 196608;
     // dec2.bits[3] = 2147549184;
-    dec2.bits[3] = 2147483648;
+    // dec2.bits[3] = 2147483648;
 
     s21_decimal dec3;
     s21_null_decimal(&dec3);
@@ -301,19 +306,19 @@ int main(void) {
     s21_decimal dec4;
     s21_null_decimal(&dec4);
 
-    int i = s21_sub(dec1, dec2, &dec3);
+    // int i = s21_add(dec1, dec2, &dec3);
     print_binary_representation_std(dec1);
     print_binary_representation_std(dec2);
-    print_binary_representation_std(dec3);
-    s21_decimal_alt de1_alt = s21_convert_std_to_alt(dec1);
-    print_binary_representation_alt(de1_alt);
-    s21_left_shift(&de1_alt);
-    print_binary_representation_alt(de1_alt);
+    // print_binary_representation_std(dec3);
     // // print_binary_representation_std(dec4);
     // // print_binary_representation_std(dec1);
     // // print_binary_representation_std(dec2);
-    // int a = s21_mul(dec1, dec2, &dec4);
-    // print_binary_representation_std(dec4);
+    int a = s21_mul(dec1, dec2, &dec4);
+    print_binary_representation_std(dec4);
 
     return 0;
 }
+
+// res: 000000000101101100000
+// alt: 000000010110110000000
+// res: 000000011010011100000
