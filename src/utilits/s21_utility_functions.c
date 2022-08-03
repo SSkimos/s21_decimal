@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "s21_utility.h"
+#include "../s21_decimal.h"
 // достает нужный бит из инта
 // требуется для определения знака стандартного децимала
 // и вывода стандартного и альтернативного децимала в двоичной форме
@@ -253,4 +255,10 @@ int s21_rescale(s21_decimal *value_1, s21_decimal *value_2) {
     s21_rescale_alt(&alt_value_1, &alt_value_2);
     *value_1 = s21_convert_alt_to_std(alt_value_1);
     *value_2 = s21_convert_alt_to_std(alt_value_2);
+}
+
+void init_decimal(s21_decimal *decimal) {
+    for (int i = 0; i < 4; i++) {
+        decimal->bits[i] = 0;
+    }
 }
