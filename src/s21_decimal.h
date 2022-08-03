@@ -38,4 +38,7 @@ int s21_is_greater_or_equal(s21_decimal a, s21_decimal b);
 int s21_is_less(s21_decimal a, s21_decimal b);
 int s21_is_less_or_equal(s21_decimal a, s21_decimal b);
 
+int s21_from_int_to_decimal(int src, s21_decimal *dst);
+int s21_from_float_to_decimal(float src, s21_decimal *dst);
+
 #endif  // SRC_S21_DECIMAL_H_

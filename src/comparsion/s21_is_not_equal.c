@@ -1,4 +1,4 @@
-#include "s21_comparsion.h"
+#include "../s21_decimal.h"
 
 int s21_is_not_equal(s21_decimal a, s21_decimal b) {
     int equality = s21_is_equal(a, b);

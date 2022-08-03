@@ -1,6 +1,7 @@
 #include <stdio.h>
-#define S21_INTMAX 255  // (hotblack) i need it for some tests
 #include "../s21_decimal.h"
+#include "../utilits/s21_utility.h"
+#define S21_INTMAX 255  // (hotblack) i need it for some tests
 
 
 // достает нужный бит из инта

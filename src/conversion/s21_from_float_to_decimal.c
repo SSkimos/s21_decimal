@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "../conversion/s21_conversion.h"
-#include "../utilits/s21_structures.h"
+#include "../s21_decimal.h"
 
 int get_exponent(long double number) {
     int exponent = 0;

@@ -1,6 +1,6 @@
 #include <stdio.h>
-// #include "../utilits/s21_structures.h"
-#include "s21_arithmetics.h"
+#include "../utilits/s21_utility.h"
+#include "../s21_decimal.h"
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int return_code;
