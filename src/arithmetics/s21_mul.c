@@ -11,3 +11,4 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     *result = s21_convert_alt_to_std(alt_result);
     return return_code;
 }
+
