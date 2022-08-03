@@ -15,7 +15,7 @@ bool s21_left_shift(s21_decimal_alt *alt) {
     if (alt -> bits[0] == 1)
         return_code = 1;
         // число было нечетным
-    for (int i = 0; i < 96; i++)
+    for (int i = 0; i < 95; i++)
         alt -> bits[i] = alt -> bits[i + 1];
     alt -> bits[95] = 0;
     return return_code;
