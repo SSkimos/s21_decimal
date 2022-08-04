@@ -2,7 +2,7 @@
 #include "../s21_decimal.h"
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-    int return_code;
+    int return_code = 0;
     if (value_2.bits[0] == 0 && value_2.bits[1] == 0 && value_2.bits[2] == 0) {
         return_code = 3;  // деление на ноль
     } else {
