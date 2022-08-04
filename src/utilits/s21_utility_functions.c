@@ -8,7 +8,6 @@ bool s21_get_bit_int(unsigned int num, int pos) {
 }
 
 // сдвиг вправо для альтернативного децимала
-// пока что нигде не используется
 bool s21_right_shift(s21_decimal_alt *alt) {
     bool return_code = 0;
     if (alt -> bits[0] == 1)
@@ -79,3 +78,59 @@ void init_decimal(s21_decimal *decimal) {
     }
 }
 
+// деление числа на 10
+// будет возвращать остаток от деления или сразу округлять
+int div_by_ten(s21_decimal_alt *alt) {
+    s21_decimal_alt result;
+    s21_null_decimal_alt(&result);
+    // возможно, эта конструкция не нужна и есть решение получше
+    int exp = alt -> exp;
+    int sign = alt -> sign;
+    result.sign = 0;
+    result.exp = 0;
+
+    s21_decimal_alt five;
+    s21_null_decimal_alt(&five);
+    five.bits[1] = 1;
+    five.bits[3] = 1;
+    while (compare_bits(*alt, five))
+        s21_left_shift(&five);
+    if (five.bits[1] == 0)
+        s21_right_shift(&five);
+    for (int i = 0; i < 96; i++) {
+        if (compare_bits(*alt, five)) {
+            s21_sub_alt(*alt, five, alt);
+            result.bits[0] = 1;
+        }
+        if (five.bits[1] == 1)
+            break;
+        else
+            s21_right_shift(&five);
+        s21_left_shift(&result);
+    }
+    int res = s21_convert_alt_to_std(*alt).bits[0];
+    *alt = result;
+    // возможно, эта конструкция не нужна и есть решение получше
+    alt -> exp = exp - 1;
+    alt -> sign = sign;
+    return res;
+}
+
+// сравнение битов первого и второго альтернативного децимала
+// не учитывает экспоненту
+// возвращает 1, если первое число больше или равно второму
+// 0 если второе число больше первого
+bool compare_bits(s21_decimal_alt alt1, s21_decimal_alt alt2) {
+    int i = 95;
+    while (i >= 0 && alt1.bits[i] == alt2.bits[i])
+        i--;
+    return i == -1 ? 1 : alt1.bits[i];
+}
+
+// равен ли альтернативный децимал 0
+bool is_null(s21_decimal_alt alt) {
+    bool result = 0;
+    for (int i = 0; i < 96; i++)
+        result += alt.bits[i];
+    return !result;
+}
