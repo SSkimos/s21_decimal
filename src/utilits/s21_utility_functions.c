@@ -7,9 +7,9 @@ bool s21_get_bit_int(unsigned int num, int pos) {
     return (num >> pos) & 1;
 }
 
-// сдвиг влево для альтернативного децимала
+// сдвиг вправо для альтернативного децимала
 // пока что нигде не используется
-bool s21_left_shift(s21_decimal_alt *alt) {
+bool s21_right_shift(s21_decimal_alt *alt) {
     bool return_code = 0;
     if (alt -> bits[0] == 1)
         return_code = 1;
@@ -20,9 +20,9 @@ bool s21_left_shift(s21_decimal_alt *alt) {
     return return_code;
 }
 
-// сдвиг вправо для альтернативного децимала
+// сдвиг влево для альтернативного децимала
 // нужно при умножении
-bool s21_right_shift(s21_decimal_alt *alt) {
+bool s21_left_shift(s21_decimal_alt *alt) {
     bool return_code = 0;
     if (alt -> bits[95] == 1) {
         return_code = 1;

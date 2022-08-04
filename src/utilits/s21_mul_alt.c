@@ -16,7 +16,7 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     for (int i = 0; i < 96; i++) {
         if (alt_value_2.bits[i] == 1)
             s21_add_alt(*alt_result, alt_value_1, alt_result);
-        s21_right_shift(&alt_value_1);
+        s21_left_shift(&alt_value_1);
     }
     alt_result -> exp = exp1 + exp2;
     // if (alt_result.exp > 26)
