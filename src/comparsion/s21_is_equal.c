@@ -8,6 +8,7 @@ int s21_is_equal(s21_decimal a, s21_decimal b) {
     }
     if (b.bits[3] >= MINUS_SIGN) {
         bSign = 1;  // if their signs are not matching = they are ne
+        // maybe use bits realisation more correctly
     }
     if (aSign != bSign) {
         equal = 0;
@@ -19,5 +20,5 @@ int s21_is_equal(s21_decimal a, s21_decimal b) {
             }
         }
     }
-    return (equal);
+    return equal;
 }
