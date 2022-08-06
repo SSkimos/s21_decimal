@@ -17,13 +17,16 @@ TEST_OBJS := $(TEST:%.c=$(BUILD_TEST_DIR)/%.o)
 WARNING  = -Wall -Werror -Wextra
 CFLAGS   = $(INC_FLAGS) -std=c11 -pedantic $(WARNING)
 LFLAGS  ?= $(shell pkg-config --cflags --libs check)
+INC_CHECK ?= $(shell pkg-config --cflags check)
 
 
 all: s21_decimal.a test
 
 test: check $(TEST_OBJS)
 	./$(BUILD_TEST_DIR)/tests/conversion_test.o
-	./$(BUILD_TEST_DIR)/tests/comparsion_test.o
+	$(CC) $(LFLAGS) $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test
+	./test
+	#./$(BUILD_TEST_DIR)/tests/comparsion_test.o
 
 s21_decimal.a: $(OBJS)
 	@mkdir -p $(BUILD_DIR)
@@ -37,8 +40,8 @@ $(BUILD_DIR)/%.o: %.c
 	$(CC) -c $< -o $@
 
 $(BUILD_TEST_DIR)/%.o: %.c
-	@mkdir -p $(dir $@)
-	$(CC) s21_decimal.a $(LFLAGS) $< -o $@
+	@mkdir -p $(BUILD_TEST_DIR)
+	$(CC) $(INC_CHECK) -c $^ -o $@
 
 check:
 	checkmk clean_mode=1 tests/conversion_test.check > tests/conversion_test.c
