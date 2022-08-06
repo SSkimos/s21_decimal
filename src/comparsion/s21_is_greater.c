@@ -16,6 +16,7 @@ int s21_is_greater(s21_decimal a, s21_decimal b) {
         greater = 0;
     }
     if (greater == 0) {
+        s21_rescale(&a, &b);
         for (register int i = 2; i >= 0; i--) {
             if (a.bits[i] > b.bits[i]) {
                 greater = 1;

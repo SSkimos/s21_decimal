@@ -1,18 +1,19 @@
 #include "../s21_decimal.h"
+#include "../utilits/s21_utility.h"
 
 int s21_is_equal(s21_decimal a, s21_decimal b) {
     int equal = 1;
     int aSign = 0, bSign = 0;
-    if (a.bits[3] >= MINUS_SIGN) {
+    if (s21_get_sign_std(a)) {
         aSign = 1;
     }
-    if (b.bits[3] >= MINUS_SIGN) {
-        bSign = 1;  // if their signs are not matching = they are ne
-        // maybe use bits realisation more correctly
+    if (s21_get_sign_std(b)) {
+        bSign = 1;
     }
     if (aSign != bSign) {
         equal = 0;
     } else {
+        s21_rescale(&a, &b);
         for (register int i = 0; i <= 2; i++) {
             if (a.bits[i] != b.bits[i]) {
                 equal = 0;
