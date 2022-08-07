@@ -3,16 +3,18 @@ SRC_DIR    = .
 TEST_DIR   = tests
 INC_DIRS  := $(shell find $(SRC_DIR) -type d)
 INC_FLAGS := $(addprefix -I, $(INC_DIRS))
+TEST_FLAGS  := --coverage -c -g
 
 SRC  := $(shell find $(SRC_DIR) -name "s21*.c" | sed -e 's/\.\///')
 TEST := $(shell find $(TEST_DIR) -name "*.c" | sed -e 's/\.\///')
-CHECK:= $(shell find $(TEST_DIR) -name "*.check" | sed -e 's/\/\///')
 
 BUILD_DIR      = obj
 BUILD_TEST_DIR = obj_test
+GCOV_OBJ_DIR  := gcov_res
 
 OBJS      := $(SRC:%.c=$(BUILD_DIR)/%.o)
 TEST_OBJS := $(TEST:%.c=$(BUILD_TEST_DIR)/%.o)
+GCOV_OBJS := $(SRC:%.c=$(GCOV_OBJ_DIR)/%.o)
 
 WARNING  = -Wall -Werror -Wextra
 CFLAGS   = $(INC_FLAGS) -std=c11 -pedantic $(WARNING)
@@ -32,8 +34,15 @@ s21_decimal.a: $(OBJS)
 	ar rc s21_decimal.a $(OBJS)
 	ranlib s21_decimal.a
 
-gcov_report:
-
+gcov_report: $(GCOV_OBJS) $(BUILD_TEST_DIR)/main.o $(SRC)
+	@mkdir -p $(GCOV_OBJ_DIR)
+	ar rc s21_decimal.a $(GCOV_OBJS)
+	ranlib s21_decimal.a
+	$(CC) $(LFLAGS) --coverage $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test
+	- ./test
+	./../materials/lcov/bin/lcov -f -c --directory . -o ./coverage.info 
+	./../materials/lcov/bin/genhtml coverage.info --output-directory=res
+	open res/index.html
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -47,15 +56,20 @@ $(BUILD_TEST_DIR)/%.o: %.c
 	@mkdir -p $(BUILD_TEST_DIR)
 	$(CC) $(INC_CHECK) -c $^ -o $@
 
+$(GCOV_OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(TEST_FLAGS) -c $< -o $@
+
 clean: 
-	@ echo $(SRC)
-	@ echo $(OBJS)
-	rm -r $(BUILD_DIR)
+	rm -f *.gcda *.gcov *.o *.gcno
 
 clean_lib:
-	rm s21_decimal.a
+	rm -f s21_decimal.a
 
-rebuild: clean clean_lib all
+clean_bin:
+	rm -rf $(BUILD_DIR)
+
+rebuild: clean clean_lib clean_bin all
 
 lint:
 	-cp ../materials/linters/CPPLINT.cfg .

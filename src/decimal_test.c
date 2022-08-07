@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <check.h>
 #include "tests/s21_decimal_test.h"
 #include "s21_decimal.h"
@@ -9,7 +11,7 @@ int main() {
     compare = comparsion_suite();
     runner = srunner_create(compare);
     // srunner_add_suite(runner, compare);
-    srunner_set_log(runner, "test.log");
+    srunner_set_log(runner, "tests/test.log");
     srunner_run_all(runner, CK_NORMAL);
     no_failed = srunner_ntests_failed(runner);
     srunner_free(runner);
