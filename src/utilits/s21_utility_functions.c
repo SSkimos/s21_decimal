@@ -1,5 +1,6 @@
 #include "s21_utility.h"
 #include "../s21_decimal.h"
+#include <stdio.h>
 
 bool s21_get_bit_int(unsigned int num, int pos) {
     return (num >> pos) & 1;
@@ -10,7 +11,7 @@ bool s21_right_shift(s21_decimal_alt *alt) {
     bool return_code = 0;
     if (alt -> bits[0] == 1)
         return_code = 1;
-        // число было нечетным
+    // число было нечетным
     for (int i = 0; i < 191; i++)
         alt -> bits[i] = alt -> bits[i + 1];
     alt -> bits[191] = 0;
@@ -24,9 +25,9 @@ bool s21_left_shift(s21_decimal_alt *alt) {
     // if (alt -> bits[191] == 1) {
     //     return_code = 1;
     // } else {
-        for (int i = 191; i > 0; i--)
-            alt -> bits[i] = alt -> bits[i - 1];
-        alt -> bits[0] = 0;
+    for (int i = 191; i > 0; i--)
+        alt -> bits[i] = alt -> bits[i - 1];
+    alt -> bits[0] = 0;
     // }
     return return_code;
 }
@@ -71,7 +72,6 @@ void print_binary_representation_alt_s(s21_decimal_alt alt) {
 }
 
 
->>>>>>> workerco
 void s21_null_decimal(s21_decimal *std) {
     for (int i = 0; i < 4; i++)
         std -> bits[i] = 0;
