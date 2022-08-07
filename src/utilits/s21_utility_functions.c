@@ -1,8 +1,6 @@
 #include "s21_utility.h"
 #include "../s21_decimal.h"
-// достает нужный бит из инта
-// требуется для определения знака стандартного децимала
-// и вывода стандартного и альтернативного децимала в двоичной форме
+
 bool s21_get_bit_int(unsigned int num, int pos) {
     return (num >> pos) & 1;
 }
@@ -33,27 +31,52 @@ bool s21_left_shift(s21_decimal_alt *alt) {
     return return_code;
 }
 
-// достает знак из стандартного децимала
-// нужна в преобразовании в альтернативную форму
 bool s21_get_sign_std(s21_decimal dec) {
     return s21_get_bit_int(dec.bits[3], 31);
 }
 
-// достает положение точки из стандартного децимала
-// нужна в преобразовании в альтернативную форму
 int s21_get_exp_std(s21_decimal dec) {
     return (dec.bits[3] % 2147483648) >> 16;
 }
 
-// зануление стандартного децимала
-// просто потому что надо
+void print_binary_representation_std(s21_decimal std) {
+    for (int i = 2; i >= 0; i--)
+        for (int j = 31; j >= 0; j--)
+            printf("%i", s21_get_bit_int(std.bits[i], j));
+    printf(" ");
+    for (int j = 31; j >= 0; j--)
+        printf("%i", s21_get_bit_int(std.bits[3], j));
+    printf("\n");
+}
+
+void print_binary_representation_alt(s21_decimal_alt alt) {
+    for (int i = 95; i >= 0; i--)
+        printf("%i", alt.bits[i]);
+    printf(" %i %i\n", alt.sign, alt.exp);
+}
+
+void print_binary_representation_std_s(s21_decimal std) {
+    for (int j = 31; j >= 0; j--)
+        printf("%i", s21_get_bit_int(std.bits[0], j));
+    printf(" ");
+    for (int j = 31; j >= 16; j--)
+        printf("%i", s21_get_bit_int(std.bits[3], j));
+    printf("\n");
+}
+
+void print_binary_representation_alt_s(s21_decimal_alt alt) {
+    for (int i = 20; i >= 0; i--)
+        printf("%i", alt.bits[i]);
+    printf(" %i %i\n", alt.sign, alt.exp);
+}
+
+
+>>>>>>> workerco
 void s21_null_decimal(s21_decimal *std) {
     for (int i = 0; i < 4; i++)
         std -> bits[i] = 0;
 }
 
-// зануление альтернативного децимала
-// просто потому что надо
 void s21_null_decimal_alt(s21_decimal_alt *alt) {
     alt -> sign = 0;
     alt -> exp = 0;

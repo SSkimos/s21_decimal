@@ -3,57 +3,76 @@ SRC_DIR    = .
 TEST_DIR   = tests
 INC_DIRS  := $(shell find $(SRC_DIR) -type d)
 INC_FLAGS := $(addprefix -I, $(INC_DIRS))
+TEST_FLAGS  := --coverage -c -g
 
 SRC  := $(shell find $(SRC_DIR) -name "s21*.c" | sed -e 's/\.\///')
 TEST := $(shell find $(TEST_DIR) -name "*.c" | sed -e 's/\.\///')
-CHECK:= $(shell find $(TEST_DIR) -name "*.check" | sed -e 's/\/\///')
 
 BUILD_DIR      = obj
 BUILD_TEST_DIR = obj_test
+GCOV_OBJ_DIR  := gcov_res
 
 OBJS      := $(SRC:%.c=$(BUILD_DIR)/%.o)
 TEST_OBJS := $(TEST:%.c=$(BUILD_TEST_DIR)/%.o)
+GCOV_OBJS := $(SRC:%.c=$(GCOV_OBJ_DIR)/%.o)
 
 WARNING  = -Wall -Werror -Wextra
 CFLAGS   = $(INC_FLAGS) -std=c11 -pedantic $(WARNING)
 LFLAGS  ?= $(shell pkg-config --cflags --libs check)
+INC_CHECK ?= $(shell pkg-config --cflags check)
+DEC_TEST  := decimal_test.c
 
 
 all: s21_decimal.a test
 
-test: check $(TEST_OBJS)
-	./$(BUILD_TEST_DIR)/tests/conversion_test.o
-	./$(BUILD_TEST_DIR)/tests/comparsion_test.o
+test: $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o
+	$(CC) $(LFLAGS) $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test.out
+	./test.out
 
 s21_decimal.a: $(OBJS)
 	@mkdir -p $(BUILD_DIR)
 	ar rc s21_decimal.a $(OBJS)
 	ranlib s21_decimal.a
 
-gcov_report:
+gcov_report: $(GCOV_OBJS) $(BUILD_TEST_DIR)/main.o $(SRC)
+	@mkdir -p $(GCOV_OBJ_DIR)
+	ar rc s21_decimal.a $(GCOV_OBJS)
+	ranlib s21_decimal.a
+	$(CC) $(LFLAGS) --coverage $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test.out
+	- ./test.out
+	./../materials/lcov/bin/lcov -f -c --directory . -o ./gcov_res/coverage.info 
+	./../materials/lcov/bin/genhtml gcov_res/coverage.info --output-directory=gcov_res
+	open gcov_res/index.html
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) -c $< -o $@
 
+$(BUILD_TEST_DIR)/main.o: $(DEC_TEST) 
+	@mkdir -p $(BUILD_TEST_DIR)
+	$(CC) $(INC_CHECK) -c -o $(BUILD_TEST_DIR)/main.o $(DEC_TEST)
+
 $(BUILD_TEST_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) s21_decimal.a $(LFLAGS) $< -o $@
+	$(CC) $(INC_CHECK) -c $^ -o $@
 
-check:
-	checkmk clean_mode=1 tests/conversion_test.check > tests/conversion_test.c
-	checkmk clean_mode=1 tests/comparsion_test.check > tests/comparsion_test.c
+$(GCOV_OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(TEST_FLAGS) -c $< -o $@
 
 clean: 
-	@ echo $(SRC)
-	@ echo $(OBJS)
-	rm -r $(BUILD_DIR)
-	rm tests/*.c
+	rm -f *.gcda *.gcov *.o *.gcno
 
 clean_lib:
-	rm s21_decimal.a
+	rm -f s21_decimal.a
 
-rebuild: clean clean_lib all
+clean_bin:
+	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_TEST_DIR)
+	rm -rf $(GCOV_OBJ_DIR)
+	rm -f test.out
+
+rebuild: clean clean_lib clean_bin all
 
 lint:
 	-cp ../materials/linters/CPPLINT.cfg .
