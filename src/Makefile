@@ -26,8 +26,8 @@ DEC_TEST  := decimal_test.c
 all: s21_decimal.a test
 
 test: $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o
-	$(CC) $(LFLAGS) $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test
-	./test
+	$(CC) $(LFLAGS) $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test.out
+	./test.out
 
 s21_decimal.a: $(OBJS)
 	@mkdir -p $(BUILD_DIR)
@@ -38,11 +38,11 @@ gcov_report: $(GCOV_OBJS) $(BUILD_TEST_DIR)/main.o $(SRC)
 	@mkdir -p $(GCOV_OBJ_DIR)
 	ar rc s21_decimal.a $(GCOV_OBJS)
 	ranlib s21_decimal.a
-	$(CC) $(LFLAGS) --coverage $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test
-	- ./test
-	./../materials/lcov/bin/lcov -f -c --directory . -o ./coverage.info 
-	./../materials/lcov/bin/genhtml coverage.info --output-directory=res
-	open res/index.html
+	$(CC) $(LFLAGS) --coverage $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test.out
+	- ./test.out
+	./../materials/lcov/bin/lcov -f -c --directory . -o ./gcov_res/coverage.info 
+	./../materials/lcov/bin/genhtml gcov_res/coverage.info --output-directory=gcov_res
+	open gcov_res/index.html
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -53,7 +53,7 @@ $(BUILD_TEST_DIR)/main.o: $(DEC_TEST)
 	$(CC) $(INC_CHECK) -c -o $(BUILD_TEST_DIR)/main.o $(DEC_TEST)
 
 $(BUILD_TEST_DIR)/%.o: %.c
-	@mkdir -p $(BUILD_TEST_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(INC_CHECK) -c $^ -o $@
 
 $(GCOV_OBJ_DIR)/%.o: %.c
@@ -68,6 +68,9 @@ clean_lib:
 
 clean_bin:
 	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_TEST_DIR)
+	rm -rf $(GCOV_OBJ_DIR)
+	rm -f test.out
 
 rebuild: clean clean_lib clean_bin all
 
