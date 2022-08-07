@@ -8,7 +8,7 @@ typedef struct {
 } s21_decimal;
 
 typedef struct {
-    bool bits[96];
+    bool bits[192];
     bool sign;
     int exp;
 } s21_decimal_alt;

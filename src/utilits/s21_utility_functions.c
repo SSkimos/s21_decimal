@@ -13,9 +13,9 @@ bool s21_right_shift(s21_decimal_alt *alt) {
     if (alt -> bits[0] == 1)
         return_code = 1;
         // число было нечетным
-    for (int i = 0; i < 95; i++)
+    for (int i = 0; i < 191; i++)
         alt -> bits[i] = alt -> bits[i + 1];
-    alt -> bits[95] = 0;
+    alt -> bits[191] = 0;
     return return_code;
 }
 
@@ -23,13 +23,13 @@ bool s21_right_shift(s21_decimal_alt *alt) {
 // нужно при умножении
 bool s21_left_shift(s21_decimal_alt *alt) {
     bool return_code = 0;
-    if (alt -> bits[95] == 1) {
-        return_code = 1;
-    } else {
-        for (int i = 95; i > 0; i--)
+    // if (alt -> bits[191] == 1) {
+    //     return_code = 1;
+    // } else {
+        for (int i = 191; i > 0; i--)
             alt -> bits[i] = alt -> bits[i - 1];
         alt -> bits[0] = 0;
-    }
+    // }
     return return_code;
 }
 
@@ -57,7 +57,7 @@ void s21_null_decimal(s21_decimal *std) {
 void s21_null_decimal_alt(s21_decimal_alt *alt) {
     alt -> sign = 0;
     alt -> exp = 0;
-    for (int i = 0; i < 96; i++)
+    for (int i = 0; i < 192; i++)
         alt -> bits[i] = 0;
 }
 
@@ -79,7 +79,7 @@ void init_decimal(s21_decimal *decimal) {
 }
 
 // деление числа на 10
-// будет возвращать остаток от деления или сразу округлять
+// возращает остаток от деления числа на 10
 int div_by_ten(s21_decimal_alt *alt) {
     s21_decimal_alt result;
     s21_null_decimal_alt(&result);
@@ -88,24 +88,23 @@ int div_by_ten(s21_decimal_alt *alt) {
     int sign = alt -> sign;
     result.sign = 0;
     result.exp = 0;
-
-    s21_decimal_alt five;
-    s21_null_decimal_alt(&five);
-    five.bits[1] = 1;
-    five.bits[3] = 1;
-    while (compare_bits(*alt, five))
-        s21_left_shift(&five);
-    if (five.bits[1] == 0)
-        s21_right_shift(&five);
-    for (int i = 0; i < 96; i++) {
-        if (compare_bits(*alt, five)) {
-            s21_sub_alt(*alt, five, alt);
+    s21_decimal_alt ten;
+    s21_null_decimal_alt(&ten);
+    ten.bits[1] = 1;
+    ten.bits[3] = 1;
+    while (compare_bits(*alt, ten))
+        s21_left_shift(&ten);
+    if (ten.bits[1] == 0)
+        s21_right_shift(&ten);
+    for (int i = 0; i < 192; i++) {
+        if (compare_bits(*alt, ten)) {
+            s21_sub_alt(*alt, ten, alt);
             result.bits[0] = 1;
         }
-        if (five.bits[1] == 1)
+        if (ten.bits[1] == 1)
             break;
         else
-            s21_right_shift(&five);
+            s21_right_shift(&ten);
         s21_left_shift(&result);
     }
     int res = s21_convert_alt_to_std(*alt).bits[0];
@@ -121,8 +120,8 @@ int div_by_ten(s21_decimal_alt *alt) {
 // возвращает 1, если первое число больше или равно второму
 // 0 если второе число больше первого
 bool compare_bits(s21_decimal_alt alt1, s21_decimal_alt alt2) {
-    int i = 95;
-    while (i >= 0 && alt1.bits[i] == alt2.bits[i])
+    int i = 191;
+    while (alt1.bits[i] == alt2.bits[i] && i >= 0)
         i--;
     return i == -1 ? 1 : alt1.bits[i];
 }
@@ -130,7 +129,7 @@ bool compare_bits(s21_decimal_alt alt1, s21_decimal_alt alt2) {
 // равен ли альтернативный децимал 0
 bool is_null(s21_decimal_alt alt) {
     bool result = 0;
-    for (int i = 0; i < 96; i++)
+    for (int i = 0; i < 192; i++)
         result += alt.bits[i];
     return !result;
 }
