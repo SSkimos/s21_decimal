@@ -18,7 +18,5 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
             s21_add_alt(*alt_result, alt_value_1, alt_result);
         s21_left_shift(&alt_value_1);
     }
-    alt_result -> exp = exp1 + exp2;
-    // if (alt_result.exp > 26)
     alt_result -> sign = sign1 ^ sign2;
 }
