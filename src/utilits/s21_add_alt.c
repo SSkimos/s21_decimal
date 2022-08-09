@@ -21,11 +21,10 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
             t_bit = 0;
     }
     alt_result -> exp = alt_value_1.exp;
-    if (t_bit == 1) {
+    if (last_bit(*alt_result) > 95) {
         if (alt_result -> exp == 0) {
             return_code = 1;  // произошло переполнение
         } else {
-            alt_result -> bits[96] = 1;
             int mod = div_by_ten(alt_result);
             if (mod == 5 && alt_result -> bits || mod > 5) {
                 s21_decimal_alt one;

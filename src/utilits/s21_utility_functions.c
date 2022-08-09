@@ -156,3 +156,13 @@ bool is_null(s21_decimal_alt alt) {
         result += alt.bits[i];
     return !result;
 }
+
+// где находится самый левый единичный бит?
+int last_bit(s21_decimal_alt alt) {
+    int i = -1;
+    if (!is_null(alt))
+        for (i = 191; i >= 0; i--)
+            if (alt.bits[i] == 1)
+                break;
+    return i;
+}

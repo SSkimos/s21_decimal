@@ -26,7 +26,7 @@ void init_decimal(s21_decimal *decimal);
 int div_by_ten(s21_decimal_alt *alt);
 bool compare_bits(s21_decimal_alt alt1, s21_decimal_alt alt2);
 bool is_null(s21_decimal_alt alt);
-
+int last_bit(s21_decimal_alt alt);
 
 void print_binary_representation_std_s(s21_decimal std);
 void print_binary_representation_alt_s(s21_decimal_alt alt);
