@@ -15,10 +15,6 @@ s21_decimal_alt s21_convert_std_to_alt(s21_decimal std) {
     return alt;
 }
 
-// преобразование альтернативного децимала
-// протестировано, работает с корректными децималами
-// уже не поломается на децимале со слишком большим положением точки
-// (вроде)
 s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt) {
     s21_decimal std;
     s21_null_decimal(&std);
@@ -27,9 +23,9 @@ s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt) {
         for (int j = 31; j >= 0; j--)
             std.bits[i] = (std.bits[i] << 1) + alt.bits[k--];
     std.bits[3] = alt.sign;
-    std.bits[3] <<= 6;
-    k = 64;
-    for (int i = 8; i >= 0; i--) {
+    std.bits[3] <<= 7;
+    k = 128;
+    for (int i = 7; i >= 0; i--) {
         std.bits[3] <<= 1;
         if (alt.exp >= k) {
             alt.exp -= k;
