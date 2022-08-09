@@ -60,19 +60,16 @@ $(GCOV_OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(TEST_FLAGS) -c $< -o $@
 
+.PHONY: clean 
 clean: 
 	rm -f *.gcda *.gcov *.o *.gcno
-
-clean_lib:
 	rm -f s21_decimal.a
-
-clean_bin:
 	rm -rf $(BUILD_DIR)
 	rm -rf $(BUILD_TEST_DIR)
 	rm -rf $(GCOV_OBJ_DIR)
 	rm -f test.out
 
-rebuild: clean clean_lib clean_bin all
+rebuild: clean all
 
 lint:
 	-cp ../materials/linters/CPPLINT.cfg .
