@@ -15,7 +15,7 @@ START_TEST(basic_sub) {
     dec1.bits[0] = 532167;
 
     dec2.bits[0] = 123456;
-    
+
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 408711;

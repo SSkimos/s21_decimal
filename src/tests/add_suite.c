@@ -177,10 +177,6 @@ START_TEST(big_values_dot_overflow) {
     int status = s21_add(dec1, dec2, &ans);
     int true_status = 0;
 
-    // раскомментируй это, чтобы посмотреть на результаты
-    print_binary_representation_std(ans);
-    print_binary_representation_std(true_ans);
-
     ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
     ck_assert_int_eq(status, true_status);
 } END_TEST

@@ -9,14 +9,16 @@ int main() {
     Suite *compare;
     Suite *add;
     Suite *sub;
+    Suite *mul;
     SRunner* runner;
     compare = comparsion_suite();
     add = add_suite();
     sub = sub_suite();
+    mul = mul_suite();
     runner = srunner_create(compare);
-    // runner = srunner_create(add);
     srunner_add_suite(runner, add);
     srunner_add_suite(runner, sub);
+    srunner_add_suite(runner, mul);
     srunner_set_log(runner, "tests/test.log");
     srunner_run_all(runner, CK_NORMAL);
     no_failed = srunner_ntests_failed(runner);
