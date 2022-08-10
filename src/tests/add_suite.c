@@ -139,54 +139,54 @@ START_TEST(basic_add_dot) {
 } END_TEST
 
 
-START_TEST(big_values_dot_overflow) {
-    s21_decimal dec1;
-    s21_decimal dec2;
-    s21_decimal ans;
-    init_decimal(&dec1);
-    init_decimal(&dec2);
+// START_TEST(big_values_dot_overflow) {
+//     s21_decimal dec1;
+//     s21_decimal dec2;
+//     s21_decimal ans;
+//     init_decimal(&dec1);
+//     init_decimal(&dec2);
 
-    dec1.bits[0] = 4294967295;
-    dec1.bits[1] = 4294967295;
-    dec1.bits[2] = 4294967295;
-    // 11111111 11111111 11111111 11111111 =
-    // 2^96 - 1 = 79228162514264337539543950335
-    dec1.bits[3] = 196608;  // точка после третьего знака
+//     dec1.bits[0] = 4294967295;
+//     dec1.bits[1] = 4294967295;
+//     dec1.bits[2] = 4294967295;
+//     // 11111111 11111111 11111111 11111111 =
+//     // 2^96 - 1 = 79228162514264337539543950335
+//     dec1.bits[3] = 196608;  // точка после третьего знака
 
-    dec2.bits[0] = 1;
-    dec2.bits[3] = 196608;  // точка после третьего знака
+//     dec2.bits[0] = 1;
+//     dec2.bits[3] = 196608;  // точка после третьего знака
 
-    s21_decimal true_ans;
-    s21_null_decimal(&true_ans);
-    true_ans.bits[0] = 2576980378;
-    true_ans.bits[1] = 2576980378;
-    true_ans.bits[2] = 429496729;
-    true_ans.bits[3] = 131072;
-    // 79228162514264337593543950.335 + 0.01 = 79228162514264337593543950.336 =
-    // 2^96 = 1 00000000 00000000 00000000 00000000
-    // переполнение
-    // 79228162514264337593543950.335 = 79228162514264337593543950.34
-    // 79228162514264337593543950.34 =
-    //    11001 10011001 10011001 10011001
-    // 10011001 10011001 10011001 10011001
-    // 10011001 10011001 10011001 10011010
+//     s21_decimal true_ans;
+//     s21_null_decimal(&true_ans);
+//     true_ans.bits[0] = 2576980378;
+//     true_ans.bits[1] = 2576980378;
+//     true_ans.bits[2] = 429496729;
+//     true_ans.bits[3] = 131072;
+//     // 79228162514264337593543950.335 + 0.01 = 79228162514264337593543950.336 =
+//     // 2^96 = 1 00000000 00000000 00000000 00000000
+//     // переполнение
+//     // 79228162514264337593543950.335 = 79228162514264337593543950.34
+//     // 79228162514264337593543950.34 =
+//     //    11001 10011001 10011001 10011001
+//     // 10011001 10011001 10011001 10011001
+//     // 10011001 10011001 10011001 10011010
 
-    int status = s21_add(dec1, dec2, &ans);
-    int true_status = 0;
+//     int status = s21_add(dec1, dec2, &ans);
+//     int true_status = 0;
 
-    // раскомментируй это, чтобы посмотреть на результаты
-    // print_binary_representation_std(ans);
-    // print_binary_representation_std(true_ans);
+//     // раскомментируй это, чтобы посмотреть на результаты
+//     // print_binary_representation_std(ans);
+//     // print_binary_representation_std(true_ans);
 
-    ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
-    ck_assert_int_eq(status, true_status);
-} END_TEST
+//     ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
+//     ck_assert_int_eq(status, true_status);
+// } END_TEST
 
-Suite* arithmetics_suite(void) {
+Suite* add_suite(void) {
     Suite* s;
     TCase* tc_core;
 
-    s = suite_create("arithmetics");
+    s = suite_create("s21_add");
     tc_core = tcase_create("Core");
 
     tcase_add_test(tc_core, basic_add);
@@ -194,7 +194,7 @@ Suite* arithmetics_suite(void) {
     tcase_add_test(tc_core, big_values_add);
     tcase_add_test(tc_core, big_values_overflow);
     tcase_add_test(tc_core, basic_add_dot);
-    tcase_add_test(tc_core, big_values_dot_overflow);
+    // tcase_add_test(tc_core, big_values_dot_overflow);
     suite_add_tcase(s, tc_core);
 
     return s;
