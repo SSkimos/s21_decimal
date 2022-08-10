@@ -5,6 +5,7 @@
 // поломается на децимале со слишком большим положением точки
 s21_decimal_alt s21_convert_std_to_alt(s21_decimal std) {
     s21_decimal_alt alt;
+    s21_null_decimal_alt(&alt);
     alt.sign = s21_get_sign_std(std);
     alt.exp = s21_get_exp_std(std);
     int i = 0;
