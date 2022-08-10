@@ -15,7 +15,6 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             s21_right_shift(&alt_value_1);
             s21_right_shift(&alt_value_2);
         }
-        
         // я пока что не поняла алгоритма побитового деления
         // но вот сокращение всего на степени двойки!
         *result = s21_convert_alt_to_std(alt_result);
