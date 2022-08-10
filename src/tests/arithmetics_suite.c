@@ -11,7 +11,7 @@ START_TEST(basic_add) {
     dec1.bits[0] = 123456;
     dec2.bits[0] = 532167;
     // 123456 + 532167 = 655623
-    
+
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 655623;
@@ -34,7 +34,7 @@ START_TEST(basic_add_2) {
     dec1.bits[3] = 2147483648;  // оба числа отрицательны
     dec2.bits[3] = 2147483648;  // мне кажется, что в MINUS_SIGN ошибка
     // -38321 + (-13282) = -51603
-    
+
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 51603;
@@ -54,7 +54,7 @@ START_TEST(big_values_add) {
     s21_decimal ans;
     init_decimal(&dec1);
     init_decimal(&dec2);
-    
+
     dec1.bits[0] = 4238529012;
     dec1.bits[1] = 4294967295;
     dec1.bits[2] = 0;
@@ -90,7 +90,7 @@ START_TEST(big_values_overflow) {
     s21_decimal ans;
     init_decimal(&dec1);
     init_decimal(&dec2);
-    
+
     dec1.bits[0] = 4238529012;
     dec1.bits[1] = 4294967295;
     dec1.bits[2] = 4294967295;
@@ -147,9 +147,10 @@ START_TEST(big_values_dot_overflow) {
     init_decimal(&dec2);
 
     dec1.bits[0] = 4294967295;
-    dec1.bits[1] = 4294967295;    
+    dec1.bits[1] = 4294967295;
     dec1.bits[2] = 4294967295;
-    // 11111111 11111111 11111111 11111111 = 2^96 - 1 = 79228162514264337539543950335
+    // 11111111 11111111 11111111 11111111 =
+    // 2^96 - 1 = 79228162514264337539543950335
     dec1.bits[3] = 196608;  // точка после третьего знака
 
     dec2.bits[0] = 1;
@@ -165,12 +166,14 @@ START_TEST(big_values_dot_overflow) {
     // 2^96 = 1 00000000 00000000 00000000 00000000
     // переполнение
     // 79228162514264337593543950.335 = 79228162514264337593543950.34
-    // 79228162514264337593543950.34 = 
-    // 11001 10011001 10011001 10011001   10011001 10011001 10011001 10011001   10011001 10011001 10011001 10011010
+    // 79228162514264337593543950.34 =
+    //    11001 10011001 10011001 10011001
+    // 10011001 10011001 10011001 10011001
+    // 10011001 10011001 10011001 10011010
 
     int status = s21_add(dec1, dec2, &ans);
     int true_status = 0;
-    
+
     // раскомментируй это, чтобы посмотреть на результаты
     // print_binary_representation_std(ans);
     // print_binary_representation_std(true_ans);
