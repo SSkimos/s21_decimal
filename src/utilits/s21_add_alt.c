@@ -1,9 +1,5 @@
 #include "s21_utility.h"
-#include <stdio.h>
-// побитовое сложение альтернативных децималов
-// принимает два альтернативных децимала с одинаковыми знаками
-// и положением запятой
-// возвращает 1 при переполнении
+
 int s21_add_alt(s21_decimal_alt alt_value_1, \
 s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     int return_code = 0;
