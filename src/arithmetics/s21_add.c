@@ -15,10 +15,12 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             alt_value_1.sign = 0;
             value_1 = s21_convert_alt_to_std(alt_value_1);
             return_code = s21_sub(value_2, value_1, result);
+            alt_result = s21_convert_std_to_alt(*result);
         } else {
             alt_value_2.sign = 0;
             value_2 = s21_convert_alt_to_std(alt_value_2);
             return_code = s21_sub(value_1, value_2, result);
+            alt_result = s21_convert_std_to_alt(*result);
         }
     }
     *result = s21_convert_alt_to_std(alt_result);
