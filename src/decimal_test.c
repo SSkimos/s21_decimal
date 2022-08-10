@@ -7,10 +7,12 @@
 int main() {
     int no_failed = 0;
     Suite *compare;
+    Suite *arithmetics;
     SRunner* runner;
     compare = comparsion_suite();
+    arithmetics = arithmetics_suite();
     runner = srunner_create(compare);
-    // srunner_add_suite(runner, compare);
+    srunner_add_suite(runner, arithmetics);
     srunner_set_log(runner, "tests/test.log");
     srunner_run_all(runner, CK_NORMAL);
     no_failed = srunner_ntests_failed(runner);
