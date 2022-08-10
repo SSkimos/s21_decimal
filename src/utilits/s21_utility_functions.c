@@ -40,38 +40,6 @@ int s21_get_exp_std(s21_decimal dec) {
     return (dec.bits[3] % 2147483648) >> 16;
 }
 
-void print_binary_representation_std(s21_decimal std) {
-    for (int i = 2; i >= 0; i--)
-        for (int j = 31; j >= 0; j--)
-            printf("%i", s21_get_bit_int(std.bits[i], j));
-    printf(" ");
-    for (int j = 31; j >= 0; j--)
-        printf("%i", s21_get_bit_int(std.bits[3], j));
-    printf("\n");
-}
-
-void print_binary_representation_alt(s21_decimal_alt alt) {
-    for (int i = 95; i >= 0; i--)
-        printf("%i", alt.bits[i]);
-    printf(" %i %i\n", alt.sign, alt.exp);
-}
-
-void print_binary_representation_std_s(s21_decimal std) {
-    for (int j = 31; j >= 0; j--)
-        printf("%i", s21_get_bit_int(std.bits[0], j));
-    printf(" ");
-    for (int j = 31; j >= 16; j--)
-        printf("%i", s21_get_bit_int(std.bits[3], j));
-    printf("\n");
-}
-
-void print_binary_representation_alt_s(s21_decimal_alt alt) {
-    for (int i = 20; i >= 0; i--)
-        printf("%i", alt.bits[i]);
-    printf(" %i %i\n", alt.sign, alt.exp);
-}
-
-
 void s21_null_decimal(s21_decimal *std) {
     for (int i = 0; i < 4; i++)
         std -> bits[i] = 0;
@@ -119,7 +87,7 @@ int div_by_ten(s21_decimal_alt *alt) {
         s21_left_shift(&ten);
     if (ten.bits[1] == 0)
         s21_right_shift(&ten);
-    for (int i = 0; i < 192; i++) {
+    for (int i = 0; i < 191; i++) {
         if (compare_bits(*alt, ten)) {
             s21_sub_alt(*alt, ten, alt);
             result.bits[0] = 1;
@@ -155,4 +123,15 @@ bool is_null(s21_decimal_alt alt) {
     for (int i = 0; i < 192; i++)
         result += alt.bits[i];
     return !result;
+}
+
+// где находится самый левый единичный бит?
+int last_bit(s21_decimal_alt alt) {
+    int i = -1;
+    if (!is_null(alt)) {
+        for (i = 191; i >= 0; i--)
+            if (alt.bits[i] == 1)
+                break;
+    }
+    return i;
 }

@@ -22,6 +22,9 @@ void print_binary_representation_std(s21_decimal std) {
 // и через пробелы - знак (1 - минус, 0 - плюс)
 // и положение точки
 void print_binary_representation_alt(s21_decimal_alt alt) {
+    for (int i = 100; i >= 96; i--)
+        printf("%i", alt.bits[i]);
+    printf(" ");
     for (int i = 95; i >= 0; i--)
         printf("%i", alt.bits[i]);
     printf(" %i %i\n", alt.sign, alt.exp);
