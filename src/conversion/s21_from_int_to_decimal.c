@@ -1,7 +1,7 @@
 #include "../s21_decimal.h"
 
 int s21_from_int_to_decimal(int src, s21_decimal *dst) {
-    convertation_result status;
+    convertation_result status = 0;
     if (dst) {
         status = CONVERTATION_OK;
         if (src < 0) dst->bits[3] = MINUS_SIGN;

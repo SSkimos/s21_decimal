@@ -1,7 +1,6 @@
-#include "../utilits/s21_utility.h"
 #include "../s21_decimal.h"
+#include "../utilits/s21_utility.h"
 #include <stdio.h>
-#include <math.h>
 
 int s21_mul_10(s21_decimal value, s21_decimal *result);
 
@@ -46,7 +45,8 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
         print_binary_representation_std(*dst);
 	} else {
 		status = CONVERTATION_ERROR;
-	} return status;
+	}
+	return status;
 }
 
 int s21_mul_10(s21_decimal value, s21_decimal *result) {
@@ -64,18 +64,5 @@ int s21_mul_10(s21_decimal value, s21_decimal *result) {
 
 	*result = s21_convert_alt_to_std(alt_result);
 	return return_code;
-}
-
-int s21_from_decimal_to_float(s21_decimal src, float *dst) {
-	int return_code = 0;
-    float result = 0.0;
-    int sign = 1;
-    result = src.bits[0] * pow(10, (-1 * s21_get_exp_std(src)));
-    if (s21_get_sign_std(src)) {
-        sign = -1;
-    }
-    result *= sign;
-    *dst = result;
-    return return_code;
 }
 
