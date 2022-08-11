@@ -229,6 +229,35 @@ START_TEST(return_to_sub_2) {
     ck_assert_int_eq(status, true_status);
 } END_TEST
 
+
+START_TEST(big_values_add_2) {
+    s21_decimal dec1;
+    s21_decimal dec2;
+    s21_decimal ans;
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+    dec1.bits[0] = 4294967294;
+    dec1.bits[1] = 4294967295;
+    dec1.bits[2] = 4294967295;
+
+    dec2.bits[0] = 1;
+    dec2.bits[1] = 0;
+    dec2.bits[2] = 0;
+    dec2.bits[3] = 1835008;  //точка на 28 месте
+
+    s21_decimal true_ans;
+    init_decimal(&true_ans);
+    true_ans.bits[0] = 4294967294;
+    true_ans.bits[1] = 4294967295;
+    true_ans.bits[2] = 4294967295;
+    // число не изменилось
+    int status = s21_add(dec1, dec2, &ans);
+    int true_status = 0;  // операция прошла успешно
+
+    ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
+    ck_assert_int_eq(status, true_status);
+} END_TEST
+
 Suite* add_suite(void) {
     Suite* s;
     TCase* tc_core;
@@ -239,6 +268,7 @@ Suite* add_suite(void) {
     tcase_add_test(tc_core, basic_add);
     tcase_add_test(tc_core, basic_add_2);
     tcase_add_test(tc_core, big_values_add);
+    tcase_add_test(tc_core, big_values_add_2);
     tcase_add_test(tc_core, big_values_overflow);
     tcase_add_test(tc_core, basic_add_dot);
     tcase_add_test(tc_core, big_values_dot_overflow);
