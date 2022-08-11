@@ -1,6 +1,5 @@
 #include "s21_utility.h"
 #include "../s21_decimal.h"
-#include <stdio.h>
 
 bool s21_get_bit_int(unsigned int num, int pos) {
     return (num >> pos) & 1;
@@ -39,14 +38,6 @@ void s21_null_decimal_alt(s21_decimal_alt *alt) {
     alt -> exp = 0;
     for (int i = 0; i < 192; i++)
         alt -> bits[i] = 0;
-}
-
-int s21_rescale(s21_decimal *value_1, s21_decimal *value_2) {
-    s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(*value_1);
-    s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(*value_2);
-    s21_rescale_alt(&alt_value_1, &alt_value_2);
-    *value_1 = s21_convert_alt_to_std(alt_value_1);
-    *value_2 = s21_convert_alt_to_std(alt_value_2);
 }
 
 void init_decimal(s21_decimal *decimal) {

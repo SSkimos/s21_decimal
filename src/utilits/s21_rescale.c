@@ -1,5 +1,13 @@
 #include "s21_utility.h"
 
+void s21_rescale(s21_decimal *value_1, s21_decimal *value_2) {
+    s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(*value_1);
+    s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(*value_2);
+    s21_rescale_alt(&alt_value_1, &alt_value_2);
+    *value_1 = s21_convert_alt_to_std(alt_value_1);
+    *value_2 = s21_convert_alt_to_std(alt_value_2);
+}
+
 // рескейл на уровне альтернативных децималов
 void s21_rescale_alt(s21_decimal_alt *alt_value_1, \
 s21_decimal_alt *alt_value_2) {
