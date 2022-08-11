@@ -5,6 +5,7 @@
 #include "../s21_decimal.h"
 
 Suite* comparsion_suite(void);
+Suite* conversion_suite(void);
 Suite* add_suite(void);
 Suite* sub_suite(void);
 Suite* mul_suite(void);
