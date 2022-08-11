@@ -30,14 +30,7 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
                 break;
             mod = div_by_ten(alt_result);
         }
-        if (mod == 5 && alt_result -> bits || mod > 5) {
-            s21_decimal_alt one;
-            s21_null_decimal_alt(&one);
-            one.bits[0] = 1;
-            one.exp = alt_result -> exp;
-            one.sign = alt_result -> sign;
-            return_code = s21_add_alt(*alt_result, one, alt_result);
-        }
+        s21_bank_rounding(alt_result, mod);
         // нужна еще одна проверка на переполнение
     }
 }

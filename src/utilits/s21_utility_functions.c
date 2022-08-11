@@ -135,3 +135,19 @@ int last_bit(s21_decimal_alt alt) {
     }
     return i;
 }
+
+void s21_bank_rounding(s21_decimal_alt *alt, int mod) {
+    if (mod == 5 && alt -> bits[0] || mod > 5) {
+        s21_decimal_alt one;
+        s21_null_decimal_alt(&one);
+        one.bits[0] = 1;
+        one.exp = alt -> exp;
+        one.sign = alt -> sign;
+        s21_add_alt(*alt, one, alt);
+        if (last_bit(*alt) > 95) {
+            s21_sub_alt(*alt, one, alt);
+            mod = div_by_ten(alt);
+            s21_bank_rounding(alt, mod);
+        }
+    }
+}
