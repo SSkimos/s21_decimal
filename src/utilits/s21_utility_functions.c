@@ -7,29 +7,18 @@ bool s21_get_bit_int(unsigned int num, int pos) {
 }
 
 // сдвиг вправо для альтернативного децимала
-bool s21_right_shift(s21_decimal_alt *alt) {
-    bool return_code = 0;
-    if (alt -> bits[0] == 1)
-        return_code = 1;
-    // число было нечетным
+void s21_right_shift(s21_decimal_alt *alt) {
     for (int i = 0; i < 191; i++)
         alt -> bits[i] = alt -> bits[i + 1];
     alt -> bits[191] = 0;
-    return return_code;
 }
 
 // сдвиг влево для альтернативного децимала
 // нужно при умножении
-bool s21_left_shift(s21_decimal_alt *alt) {
-    bool return_code = 0;
-    // if (alt -> bits[191] == 1) {
-    //     return_code = 1;
-    // } else {
+void s21_left_shift(s21_decimal_alt *alt) {
     for (int i = 191; i > 0; i--)
         alt -> bits[i] = alt -> bits[i - 1];
     alt -> bits[0] = 0;
-    // }
-    return return_code;
 }
 
 bool s21_get_sign_std(s21_decimal dec) {
@@ -52,9 +41,6 @@ void s21_null_decimal_alt(s21_decimal_alt *alt) {
         alt -> bits[i] = 0;
 }
 
-// простейший рескейл. нужно будет разбить на две функции,
-// подключить округление при переполнении
-// и выдачу ошибки при совсем переполнении
 int s21_rescale(s21_decimal *value_1, s21_decimal *value_2) {
     s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(*value_1);
     s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(*value_2);

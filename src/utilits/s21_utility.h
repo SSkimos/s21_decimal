@@ -3,8 +3,8 @@
 #include "../s21_decimal.h"
 
 bool s21_get_bit_int(unsigned int num, int pos);
-bool s21_right_shift(s21_decimal_alt *alt);
-bool s21_left_shift(s21_decimal_alt *alt);
+void s21_right_shift(s21_decimal_alt *alt);
+void s21_left_shift(s21_decimal_alt *alt);
 bool s21_get_sign_std(s21_decimal dec);
 int s21_get_exp_std(s21_decimal dec);
 void s21_null_decimal(s21_decimal *std);
@@ -18,7 +18,9 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
 int s21_mul_alt(s21_decimal_alt alt_value_1, \
 s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
 int s21_rescale(s21_decimal *value_1, s21_decimal *value_2);
-int s21_rescale_alt(s21_decimal_alt *alt_value_1, \
+void s21_rescale_alt(s21_decimal_alt *alt_value_1, \
+s21_decimal_alt *alt_value_2);
+void s21_rescale_alt_to_smaller(s21_decimal_alt *alt_value_1, \
 s21_decimal_alt *alt_value_2);
 void init_decimal(s21_decimal *decimal);
 int div_by_ten(s21_decimal_alt *alt);
