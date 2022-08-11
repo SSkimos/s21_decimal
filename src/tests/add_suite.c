@@ -31,14 +31,13 @@ START_TEST(basic_add_2) {
     init_decimal(&dec2);
     dec1.bits[0] = 38321;
     dec2.bits[0] = 13282;
-    dec1.bits[3] = 2147483648;  // оба числа отрицательны
-    dec2.bits[3] = 2147483648;  // мне кажется, что в MINUS_SIGN ошибка
-    // -38321 + (-13282) = -51603
+    dec1.bits[3] = MINUS_SIGN;
+    dec2.bits[3] = MINUS_SIGN;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 51603;
-    true_ans.bits[3] = 2147483648;
+    true_ans.bits[3] = MINUS_SIGN;
 
     int status = s21_add(dec1, dec2, &ans);
 
@@ -192,7 +191,7 @@ START_TEST(return_to_sub) {
     dec1.bits[0] = 23784103;
 
     dec2.bits[0] = 721398;
-    dec2.bits[3] = 2147483648;
+    dec2.bits[3] = MINUS_SIGN;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
@@ -213,14 +212,14 @@ START_TEST(return_to_sub_2) {
     init_decimal(&dec2);
     // -74563556 + 24567653 = 24567653 - 74563556 = -49995903
     dec1.bits[0] = 74563556;
-    dec1.bits[3] = 2147483648;
+    dec1.bits[3] = MINUS_SIGN;
 
     dec2.bits[0] = 24567653;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 49995903;
-    true_ans.bits[3] = 2147483648;
+    true_ans.bits[3] = MINUS_SIGN;
 
     int status = s21_add(dec1, dec2, &ans);
     int true_status = 0;  // операция прошла успешно
@@ -243,7 +242,7 @@ START_TEST(big_values_add_2) {
     dec2.bits[0] = 1;
     dec2.bits[1] = 0;
     dec2.bits[2] = 0;
-    dec2.bits[3] = 1835008;  //точка на 28 месте
+    dec2.bits[3] = 1835008;  // точка на 28 месте
 
     s21_decimal true_ans;
     init_decimal(&true_ans);

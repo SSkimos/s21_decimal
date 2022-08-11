@@ -36,13 +36,13 @@ START_TEST(basic_mul_2) {
 
     dec2.bits[0] = 364287140;
     // отрицательное число и точка после третьего знака
-    dec2.bits[3] = 2147483648 + 196608;
+    dec2.bits[3] = MINUS_SIGN + 196608;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 1694409072;
     true_ans.bits[1] = 10622208;
-    true_ans.bits[3] = 589824 + 2147483648;
+    true_ans.bits[3] = 589824 + MINUS_SIGN;
     // отрицательное число с точкой после девятого знака
 
     int status = s21_mul(dec1, dec2, &ans);

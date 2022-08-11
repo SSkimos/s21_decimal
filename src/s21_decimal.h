@@ -1,6 +1,6 @@
 #ifndef SRC_S21_DECIMAL_H_
 #define SRC_S21_DECIMAL_H_
-#define MINUS_SIGN 4294967295
+#define MINUS_SIGN 2147483648
 #include <stdbool.h>
 
 typedef struct {

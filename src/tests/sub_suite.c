@@ -42,7 +42,7 @@ START_TEST(basic_sub_2) {
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 408711;
-    true_ans.bits[3] = 2147483648;
+    true_ans.bits[3] = MINUS_SIGN;
 
     int status = s21_sub(dec1, dec2, &ans);
     int true_status = 0;  // операция прошла успешно
@@ -62,15 +62,15 @@ START_TEST(basic_sub_3) {
 
     // -532167 - (-123456) = -408711;
     dec1.bits[0] = 532167;
-    dec1.bits[3] = 2147483648;
+    dec1.bits[3] = MINUS_SIGN;
 
     dec2.bits[0] = 123456;
-    dec2.bits[3] = 2147483648;
+    dec2.bits[3] = MINUS_SIGN;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 408711;
-    true_ans.bits[3] = 2147483648;
+    true_ans.bits[3] = MINUS_SIGN;
     int status = s21_sub(dec1, dec2, &ans);
 
     int true_status = 0;  // операция прошла успешно
@@ -88,10 +88,10 @@ START_TEST(basic_sub_4) {
     s21_null_decimal(&dec2);
     // -61287 - (-234787) = 173500
     dec1.bits[0] = 61287;
-    dec1.bits[3] = 2147483648;
+    dec1.bits[3] = MINUS_SIGN;
 
     dec2.bits[0] = 234787;
-    dec2.bits[3] = 2147483648;
+    dec2.bits[3] = MINUS_SIGN;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
@@ -144,14 +144,14 @@ START_TEST(return_to_add) {
     s21_null_decimal(&dec2);
     // -2361234 - 48695 = -2361234 + (-48695) = 2409929
     dec1.bits[0] = 2361234;
-    dec1.bits[3] = 2147483648;
+    dec1.bits[3] = MINUS_SIGN;
 
     dec2.bits[0] = 48695;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
     true_ans.bits[0] = 2409929;
-    true_ans.bits[3] = 2147483648;
+    true_ans.bits[3] = MINUS_SIGN;
 
     int status = s21_sub(dec1, dec2, &ans);
 
@@ -171,7 +171,7 @@ START_TEST(return_to_add_2) {
     dec1.bits[0] = 6347852;
 
     dec2.bits[0] = 723184;
-    dec2.bits[3] = 2147483648;
+    dec2.bits[3] = MINUS_SIGN;
 
     s21_decimal true_ans;
     init_decimal(&true_ans);
