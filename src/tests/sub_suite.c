@@ -185,6 +185,36 @@ START_TEST(return_to_add_2) {
     ck_assert_int_eq(status, true_status);
 } END_TEST
 
+START_TEST(big_values_sub) {
+    s21_decimal dec1;
+    s21_decimal dec2;
+    s21_decimal ans;
+    s21_null_decimal(&dec1);
+    s21_null_decimal(&dec2);
+
+    // пример из README
+    dec1.bits[0] = 4294967295;
+    dec1.bits[1] = 4294967295;
+    dec1.bits[2] = 4294967295;
+
+    dec2.bits[0] = 6;
+    dec2.bits[1] = 0;
+    dec2.bits[2] = 0;
+    dec2.bits[3] = 65536;
+
+    s21_decimal true_ans;
+    init_decimal(&true_ans);
+    true_ans.bits[0] = 4294967294;
+    true_ans.bits[1] = 4294967295;
+    true_ans.bits[2] = 4294967295;
+    int status = s21_sub(dec1, dec2, &ans);
+
+    int true_status = 0;  // операция прошла успешно
+
+    ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
+    ck_assert_int_eq(status, true_status);
+} END_TEST
+
 Suite* sub_suite(void) {
     Suite* s;
     TCase* tc_core;
@@ -199,6 +229,7 @@ Suite* sub_suite(void) {
     tcase_add_test(tc_core, sub_with_dot);
     tcase_add_test(tc_core, return_to_add);
     tcase_add_test(tc_core, return_to_add_2);
+    tcase_add_test(tc_core, big_values_sub);
     suite_add_tcase(s, tc_core);
 
     return s;
