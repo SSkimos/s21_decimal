@@ -1,5 +1,6 @@
 #include "../utilits/s21_utility.h"
 #include "../s21_decimal.h"
+#include <stdio.h>
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int return_code = 0;
@@ -44,7 +45,7 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
                 alt_result.bits[0] = 1;
             }
             if (is_null(alt_value_1) && \
-            last_bit(alt_value_2) == denominator_left_bit)
+                    last_bit(alt_value_2) == denominator_left_bit)
                 break;
             if (last_bit(alt_value_2) > denominator_left_bit) {
                 s21_right_shift(&alt_value_2);
@@ -62,8 +63,8 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         printf("!\n");
 
         *result = s21_convert_alt_to_std(alt_result);
-        value_1 = s21_convert_alt_to_std(alt_value_1);
-        value_2 = s21_convert_alt_to_std(alt_value_2);
+        // value_1 = s21_convert_alt_to_std(alt_value_1);
+        // value_2 = s21_convert_alt_to_std(alt_value_2);
     }
     return return_code;
 }
