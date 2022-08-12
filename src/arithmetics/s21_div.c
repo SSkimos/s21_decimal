@@ -15,8 +15,52 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             s21_right_shift(&alt_value_1);
             s21_right_shift(&alt_value_2);
         }
-        // я пока что не поняла алгоритма побитового деления
-        // но вот сокращение всего на степени двойки!
+        ////////////////////////////////////
+        // пока что совсем не думаю о положении точки
+        ////////////////////////////////////
+        alt_value_1.sign = 0;
+        alt_value_2.sign = 0;
+        // очень важное значение:
+        // нужно для того чтобы я ненароком не уменьшила знаменатель
+        int denominator_left_bit = last_bit(alt_value_2);
+        // TODO(hotblack): эта конструкция используется в div_by_ten,
+        // вынеси в отдельную функцию
+        while (last_bit(alt_value_1) != last_bit(alt_value_2))
+            if (compare_bits(alt_value_1, alt_value_2))
+                s21_left_shift(&alt_value_2);
+            else
+                s21_left_shift(&alt_value_1);
+        if (!compare_bits(alt_value_1, alt_value_2))
+            s21_left_shift(&alt_value_1);
+        // вот это
+
+        for (int i = 0; i < 97; i++) {
+            printf("%i!\n", denominator_left_bit);
+            print_binary_representation_alt_s(alt_value_1);
+            print_binary_representation_alt_s(alt_value_2);
+            print_binary_representation_alt_s(alt_result);
+            if (compare_bits(alt_value_1, alt_value_2)) {
+                s21_sub_alt(alt_value_1, alt_value_2, &alt_value_1);
+                alt_result.bits[0] = 1;
+            }
+            if (is_null(alt_value_1) && \
+            last_bit(alt_value_2) == denominator_left_bit)
+                break;
+            if (last_bit(alt_value_2) > denominator_left_bit) {
+                s21_right_shift(&alt_value_2);
+            } else {
+                s21_left_shift(&alt_value_1);
+            }
+
+            s21_left_shift(&alt_result);
+        }
+
+        printf("!\n");
+        print_binary_representation_alt_s(alt_value_1);
+        print_binary_representation_alt_s(alt_value_2);
+        print_binary_representation_alt_s(alt_result);
+        printf("!\n");
+
         *result = s21_convert_alt_to_std(alt_result);
         value_1 = s21_convert_alt_to_std(alt_value_1);
         value_2 = s21_convert_alt_to_std(alt_value_2);
