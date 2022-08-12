@@ -3,16 +3,16 @@
 #include "../s21_decimal.h"
 
 START_TEST(is_equal_simple) {
-    s21_decimal decimal;
-    s21_decimal second_decimal;
-    init_decimal(&decimal);
-    init_decimal(&second_decimal);
-    int A = 5123;
-    convertation_result status = s21_from_int_to_decimal(A, &decimal);
-    convertation_result second_status = \
+        s21_decimal decimal;
+        s21_decimal second_decimal;
+        init_decimal(&decimal);
+        init_decimal(&second_decimal);
+        int A = 5123;
+        convertation_result status = s21_from_int_to_decimal(A, &decimal);
+        convertation_result second_status = \
     s21_from_int_to_decimal(A, &second_decimal);
-    ck_assert_int_eq(1, s21_is_equal(decimal, second_decimal));
-    ck_assert_int_eq(status, second_status);
+        ck_assert_int_eq(1, s21_is_equal(decimal, second_decimal));
+        ck_assert_int_eq(status, second_status);
 } END_TEST
 
 START_TEST(is_equal_0_decimal) {
@@ -138,7 +138,7 @@ START_TEST(is_less_or_equal_Classic) {
     ck_assert_int_eq(1, s21_is_less_or_equal(decimal, second_decimal));
 } END_TEST
 
-Suite* comparsion_suite(void) {
+        Suite* comparsion_suite(void) {
     Suite* s;
     TCase* tc_core;
 
