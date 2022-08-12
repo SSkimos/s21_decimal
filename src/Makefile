@@ -46,7 +46,7 @@ gcov_report: $(GCOV_OBJS) $(BUILD_TEST_DIR)/main.o $(SRC)
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_TEST_DIR)/main.o: $(DEC_TEST) 
 	@mkdir -p $(BUILD_TEST_DIR)
