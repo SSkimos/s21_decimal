@@ -7,8 +7,7 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
     convertation_result status;
     if (dst) {
         status = CONVERTATION_OK;
-        int exp = src.bits[3] & 8355840;
-        exp >>= 15;
+        int exp = s21_get_exp_std(src);
         *dst = (float)(src.bits[0] / pow(10, exp));
         if (src.bits[3] >> 31 == 1) {
             *dst = -(*dst);
@@ -18,3 +17,4 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
     }
     return status;
 }
+
