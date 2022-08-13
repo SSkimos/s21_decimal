@@ -1,5 +1,6 @@
 #include "../utilits/s21_utility.h"
 #include "../s21_decimal.h"
+#include <stdio.h>
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int return_code = 0;
@@ -17,8 +18,8 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         }
         s21_div_alt(alt_value_1, alt_value_2, &alt_result);
         *result = s21_convert_alt_to_std(alt_result);
-        value_1 = s21_convert_alt_to_std(alt_value_1);
-        value_2 = s21_convert_alt_to_std(alt_value_2);
+        // value_1 = s21_convert_alt_to_std(alt_value_1);
+        // value_2 = s21_convert_alt_to_std(alt_value_2);
     }
     return return_code;
 }

@@ -1,52 +1,35 @@
 #include "../s21_decimal.h"
 #include "../utilits/s21_utility.h"
 #include <stdio.h>
+#include <math.h>
 
 int s21_mul_10(s21_decimal value, s21_decimal *result);
+void s21_set_minus(s21_decimal *dst);
 
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
-	convertation_result status;
-	if (dst) {
-		status = CONVERTATION_OK;
-		typedef union {
-			int n;
-			float f;
-		} u;
-		u num;
-		num.f = src;
-        int mant = num.n;
-        int exp = num.n;
-
-		mant &= 8388607; // мантисса без единицы
-        mant |= (1 << 23);
-        exp &= 2139095040; // получил exp
-        exp >>= 23; //сдвинул exp
-        exp -= 127;
-		dst->bits[0] = mant;
-
-        int counter = 23 - exp;
-        while (counter > 0) {
-            if (s21_get_bit_int(dst->bits[0], 32)) {
-                // если на конце единица
-                s21_mul_10(*dst, dst);
-                s21_decimal_alt alt_decimal = s21_convert_std_to_alt(*dst);
-                s21_right_shift(&alt_decimal);
-                *dst = s21_convert_alt_to_std(alt_decimal);
-                exp++;
-            } else {
-                // если на конце ноль
-                s21_decimal_alt alt_decimal = s21_convert_std_to_alt(*dst);
-                s21_right_shift(&alt_decimal);
-                *dst = s21_convert_alt_to_std(alt_decimal);
-            }
-            counter--;
+    convertation_result status;
+    if (dst) {
+        status = CONVERTATION_OK;
+        if (src < 0) {
+            s21_set_minus(dst);
+            src = -(src);
         }
-        dst->bits[3] = exp << 15;
-        print_binary_representation_std(*dst);
-	} else {
-		status = CONVERTATION_ERROR;
-	}
-	return status;
+        int new = (int)src;
+        int exp = 0;
+        while (src - ((float)new / (int)(pow(10, exp))) != 0) {
+            exp++;
+            new = src * (int)(pow(10, exp));
+        }
+        dst->bits[0] = new;
+        dst->bits[3] += exp << 15;
+    } else {
+        status = CONVERTATION_ERROR;
+    }
+    return status;
+}
+
+void s21_set_minus(s21_decimal *dst) {
+    dst->bits[3] = 1 << 31;
 }
 
 int s21_mul_10(s21_decimal value, s21_decimal *result) {
