@@ -1,6 +1,5 @@
 #include "../utilits/s21_utility.h"
 #include "../s21_decimal.h"
-#include <stdio.h>
 
 int s21_negate(s21_decimal value, s21_decimal *res) {
     operation_result result;
