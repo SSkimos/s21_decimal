@@ -1,5 +1,5 @@
-#ifndef UTILITS_S21_STRUCTURES_H_
-#define UTILITS_S21_STRUCTURES_H_
+#ifndef SRC_UTILITS_S21_UTILITY_H_
+#define SRC_UTILITS_S21_UTILITY_H_
 #include "../s21_decimal.h"
 
 bool s21_get_bit_int(unsigned int num, int pos);
@@ -41,4 +41,4 @@ void print_binary_representation_alt(s21_decimal_alt alt);
 void print_binary_representation_std_s(s21_decimal std);
 void print_binary_representation_alt_s(s21_decimal_alt alt);
 
-#endif
+#endif  // SRC_UTILITS_S21_UTILITY_H_

@@ -7,7 +7,7 @@ int s21_is_less(s21_decimal a, s21_decimal b) {
     if (!(equal)) {
         less = s21_is_greater(a, b);
         if (less) {
-            less = 0; 
+            less = 0;
         } else {
             less = 1;
         }
