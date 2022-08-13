@@ -7,8 +7,8 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     alt_value_1.sign = 0;
     alt_value_2.sign = 0;
     s21_rescale_alt_to_zero(&alt_value_1, &alt_value_2);
-    s21_decimal_alt result;
-    s21_decimal_alt res = div_with_modulo(alt_value_1, alt_value_2, &result);
+    //  s21_decimal_alt result;
+    //  s21_decimal_alt res = div_with_modulo(alt_value_1, alt_value_2, &result);
     return return_code;
 }
 
@@ -33,3 +33,4 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     }
     return alt_value_1;
 }
+
