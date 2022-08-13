@@ -82,11 +82,13 @@ int last_bit(s21_decimal_alt alt) {
 // но 1001 и 11 в 1001 и 110
 // по совершенно непонятным мне причинам не работает с div_by_ten
 void align(s21_decimal_alt *alt_value_1, s21_decimal_alt *alt_value_2) {
-    while (last_bit(*alt_value_1) != last_bit(*alt_value_2))
-        if (compare_bits(*alt_value_1, *alt_value_2))
-            s21_left_shift(alt_value_2);
-        else
+    if (!is_null(*alt_value_1) && !is_null(*alt_value_2)) {
+        while (last_bit(*alt_value_1) != last_bit(*alt_value_2))
+            if (compare_bits(*alt_value_1, *alt_value_2))
+                s21_left_shift(alt_value_2);
+            else
+                s21_left_shift(alt_value_1);
+        if (!compare_bits(*alt_value_1, *alt_value_2))
             s21_left_shift(alt_value_1);
-    if (!compare_bits(*alt_value_1, *alt_value_2))
-        s21_left_shift(alt_value_1);
+    }
 }

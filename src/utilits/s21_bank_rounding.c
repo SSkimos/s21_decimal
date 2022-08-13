@@ -26,8 +26,7 @@ int div_by_ten(s21_decimal_alt *alt) {
         }
         if (ten.bits[1] == 1)
             break;
-        else
-            s21_right_shift(&ten);
+        s21_right_shift(&ten);
         s21_left_shift(&result);
     }
     int res = s21_convert_alt_to_std(*alt).bits[0];
@@ -39,7 +38,7 @@ int div_by_ten(s21_decimal_alt *alt) {
 }
 
 void s21_bank_rounding(s21_decimal_alt *alt, int mod) {
-    if (mod == 5 && alt -> bits[0] || mod > 5) {
+    if ((mod == 5 && alt -> bits[0]) || mod > 5) {
         s21_decimal_alt one;
         s21_null_decimal_alt(&one);
         one.bits[0] = 1;

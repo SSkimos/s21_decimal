@@ -31,6 +31,10 @@ void s21_bank_rounding(s21_decimal_alt *alt, int mod);
 int s21_div_alt(s21_decimal_alt alt_value_1, \
 s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
 void align(s21_decimal_alt *alt1, s21_decimal_alt *alt2);
+void s21_rescale_alt_to_zero(s21_decimal_alt *alt_value_1, \
+s21_decimal_alt *alt_value_2);
+s21_decimal_alt div_with_modulo(s21_decimal_alt alt_value_1, \
+s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
 
 void print_binary_representation_std(s21_decimal std);
 void print_binary_representation_alt(s21_decimal_alt alt);
