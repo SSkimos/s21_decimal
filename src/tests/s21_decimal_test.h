@@ -9,5 +9,6 @@ Suite* conversion_suite(void);
 Suite* add_suite(void);
 Suite* sub_suite(void);
 Suite* mul_suite(void);
+Suite* div_suite(void);
 
 #endif  // SRC_TESTS_SRC_S21_MATH_TEST_H_
