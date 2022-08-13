@@ -14,9 +14,8 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
         alt_value_1.sign = 0;
         alt_value_2.sign = 0;
         for (int i = 0; i < 192; i++) {
-            int k = 0;
             if (alt_value_2.bits[i] == 1)
-                k = s21_add_alt(*alt_result, alt_value_1, alt_result);
+                s21_add_alt(*alt_result, alt_value_1, alt_result);
             s21_left_shift(&alt_value_1);
         }
         alt_result -> exp = exp1 + exp2;

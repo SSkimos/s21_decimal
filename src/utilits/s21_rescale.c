@@ -31,7 +31,7 @@ s21_decimal_alt *alt_value_2) {
     } else if (is_null(*alt_value_1)) {
         alt_value_1 -> exp = alt_value_2 -> exp;
     } else {
-        alt_value_2 -> exp = alt_value_1 -> exp;       
+        alt_value_2 -> exp = alt_value_1 -> exp;
     }
 }
 

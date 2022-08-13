@@ -28,6 +28,9 @@ bool compare_bits(s21_decimal_alt alt1, s21_decimal_alt alt2);
 bool is_null(s21_decimal_alt alt);
 int last_bit(s21_decimal_alt alt);
 void s21_bank_rounding(s21_decimal_alt *alt, int mod);
+int s21_div_alt(s21_decimal_alt alt_value_1, \
+s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result);
+void align(s21_decimal_alt *alt1, s21_decimal_alt *alt2);
 
 void print_binary_representation_std(s21_decimal std);
 void print_binary_representation_alt(s21_decimal_alt alt);
