@@ -24,7 +24,7 @@ int main() {
     srunner_add_suite(runner, sub);
     srunner_add_suite(runner, mul);
     srunner_add_suite(runner, div);
-    // srunner_add_suite(runner, conv);
+    srunner_add_suite(runner, conv);
     srunner_set_log(runner, "tests/test.log");
     srunner_run_all(runner, CK_NORMAL);
     no_failed = srunner_ntests_failed(runner);
