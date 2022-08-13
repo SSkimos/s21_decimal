@@ -3,10 +3,11 @@
 #include "../s21_decimal.h"
 
 START_TEST(from_float_to_decimal_simple) {
-        s21_decimal decimal;
-        init_decimal(&decimal);
-        float number = 100.5;
-        convertation_result result = s21_from_float_to_decimal(number, &decimal);
+    s21_decimal decimal;
+    init_decimal(&decimal);
+    float number = 100.5;
+    convertation_result result = s21_from_float_to_decimal(number, &decimal);
+    ck_assert_int_eq(result, 0);
 } END_TEST
 
 START_TEST(float_eq_float) {
@@ -29,7 +30,7 @@ START_TEST(float_eq_float_minus) {
     ck_assert_float_eq(A, B);
 } END_TEST
 
-    Suite* conversion_suite(void) {
+Suite* conversion_suite(void) {
     Suite* s;
     TCase* tc_core;
 
