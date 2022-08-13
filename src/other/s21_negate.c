@@ -4,7 +4,7 @@
 
 int s21_negate(s21_decimal value, s21_decimal *res) {
     operation_result result;
-    if (1) {
+    if (res) {
         result = OPERATION_OK;
         if (value.bits[3] >> 31) {
             res->bits[0] = value.bits[0];
