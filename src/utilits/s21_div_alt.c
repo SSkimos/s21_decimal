@@ -7,7 +7,7 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
     ten.bits[3] = 1;
     s21_null_decimal_alt(alt_result);
     int return_code = 0;
-    alt_result -> sign = alt_value_1.sign ^ alt_value_2.sign;
+    bool sign = alt_value_1.sign ^ alt_value_2.sign;
     alt_value_1.sign = 0;
     alt_value_2.sign = 0;
 
@@ -32,6 +32,7 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
         exp--;
     }
     alt_result -> exp = exp - 1;
+    alt_result -> sign = sign;
     return return_code;
 }
 
