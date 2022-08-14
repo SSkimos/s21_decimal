@@ -1,5 +1,5 @@
 #include "s21_utility.h"
-#include <stdio.h>
+
 int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     s21_decimal_alt ten;
     s21_null_decimal_alt(&ten);
@@ -32,6 +32,11 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
         exp--;
     }
     alt_result -> exp = exp - 1;
+    // КОСТЫЫЫЫЛЬ
+    // в бесконечной дроби я создаю 29 знаков после запятой
+    // и на уровне выше округляю
+    if (exp > 29)
+        return_code = 2;
     alt_result -> sign = sign;
     return return_code;
 }
