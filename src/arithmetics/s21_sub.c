@@ -3,7 +3,6 @@
 
 int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int return_code = 0;
-    s21_rescale(&value_1, &value_2);
     s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(value_1);
     s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(value_2);
     s21_decimal_alt alt_result;
@@ -23,6 +22,7 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         return_code = s21_add(value_1, value_2, result);
         alt_result = s21_convert_std_to_alt(*result);
     }
+    alt_result.exp = alt_value_1.exp;
     *result = s21_convert_alt_to_std(alt_result);
     return return_code;
 }
