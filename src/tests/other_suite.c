@@ -47,6 +47,7 @@ Suite* other_suite(void) {
 
     tcase_add_test(tc_core, s21_negate_simple);
     tcase_add_test(tc_core, s21_negate_ok);
+    tcase_add_test(tc_core, s21_negate_0);
     suite_add_tcase(s, tc_core);
 
     return s;
