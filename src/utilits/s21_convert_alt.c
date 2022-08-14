@@ -34,3 +34,27 @@ s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt) {
     std.bits[3] <<= 16;
     return std;
 }
+
+s21_decimal s21_convert_int_to_std(unsigned long int number) {
+    s21_decimal decimal;
+    init_decimal(&decimal);
+    s21_decimal_alt alt_decimal;
+    alt_decimal = s21_convert_int_to_alt(number);
+    decimal = s21_convert_alt_to_std(alt_decimal);
+    return decimal;
+}
+
+s21_decimal_alt s21_convert_int_to_alt(unsigned long int number) {
+    s21_decimal_alt alt;
+    s21_null_decimal_alt(&alt);
+    int i = 0;
+    while (number >= 1) {
+        if (number % 2 == 1) {
+            alt.bits[i] = 1;
+        }
+        i++;
+        number /= 2;
+    }
+
+    return alt;
+}

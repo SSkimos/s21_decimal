@@ -30,35 +30,26 @@ START_TEST(float_eq_float_minus) {
     ck_assert_float_eq(A, B);
 } END_TEST
 
-START_TEST(float_eq_0) {
+START_TEST(float_eq_float_hard_test) {
     s21_decimal decimal;
     init_decimal(&decimal);
-    float A = 0.0;
-    float B = 1.0;
+    float A = -1000.201;
+    float B = 0.0;
     convertation_result status = s21_from_float_to_decimal(A, &decimal);
     s21_from_decimal_to_float(decimal, &B);
     ck_assert_float_eq(A, B);
-} END_TEST
+}
 
-START_TEST(int_eq_int) {
-    s21_decimal decimal;
-    init_decimal(&decimal);
-    int A = 0;
-    int B = 1;
-    convertation_result status = s21_from_int_to_decimal(A, &decimal);
-    s21_from_decimal_to_int(decimal, &B);
-    ck_assert_int_eq(A, B);
-} END_TEST
-
-START_TEST(int_eq_Bigint) {
-    s21_decimal decimal;
-    init_decimal(&decimal);
-    int A = 112312312;
-    int B = 1;
-    convertation_result status = s21_from_int_to_decimal(A, &decimal);
-    s21_from_decimal_to_int(decimal, &B);
-    ck_assert_int_eq(A, B);
-} END_TEST
+START_TEST(big_float_eq_big_float1) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        float A = 4294967295.000000;
+        float B = 4294967295.000000;
+        float C = 0.0;
+        operation_result res = s21_from_float_to_decimal(A, &decimal);
+        s21_from_decimal_to_float(decimal, &C);
+        ck_assert_double_eq(B, C);
+}
 
 Suite* conversion_suite(void) {
     Suite* s;
@@ -70,9 +61,9 @@ Suite* conversion_suite(void) {
     tcase_add_test(tc_core, from_float_to_decimal_simple);
     tcase_add_test(tc_core, float_eq_float);
     tcase_add_test(tc_core, float_eq_float_minus);
-    tcase_add_test(tc_core, float_eq_0);
-    tcase_add_test(tc_core, int_eq_int);
-    tcase_add_test(tc_core, int_eq_Bigint);
+    tcase_add_test(tc_core, float_eq_float_hard_test);
+    tcase_add_test(tc_core, big_float_eq_big_float1);
+
     suite_add_tcase(s, tc_core);
 
     return s;

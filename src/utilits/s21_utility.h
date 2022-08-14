@@ -34,4 +34,8 @@ void print_binary_representation_alt(s21_decimal_alt alt);
 void print_binary_representation_std_s(s21_decimal std);
 void print_binary_representation_alt_s(s21_decimal_alt alt);
 
+s21_decimal_alt s21_convert_int_to_alt(unsigned long int number);
+s21_decimal_alt s21_revert_alt_decimal(s21_decimal_alt alt, int i);
+s21_decimal s21_convert_int_to_std(unsigned long int number);
+
 #endif  // SRC_UTILITS_S21_UTILITY_H_
