@@ -9,8 +9,7 @@ START_TEST(is_equal_simple) {
         init_decimal(&second_decimal);
         int A = 5123;
         convertation_result status = s21_from_int_to_decimal(A, &decimal);
-        convertation_result second_status = \
-    s21_from_int_to_decimal(A, &second_decimal);
+        convertation_result second_status = s21_from_int_to_decimal(A, &second_decimal);
         ck_assert_int_eq(1, s21_is_equal(decimal, second_decimal));
         ck_assert_int_eq(status, second_status);
 } END_TEST
@@ -93,6 +92,20 @@ START_TEST(is_greater_stand) {
     ck_assert_int_eq(1, s21_is_greater(second_decimal, decimal));
 } END_TEST
 
+START_TEST(is_greater_eq) {
+    s21_decimal decimal;
+    s21_decimal second_decimal;
+    init_decimal(&decimal);
+    init_decimal(&second_decimal);
+    int B = 5123;
+    int A = B;
+    convertation_result status = s21_from_int_to_decimal(A, &decimal);
+    convertation_result second_status = \
+    s21_from_int_to_decimal(B, &second_decimal);
+    ck_assert_int_eq(status, second_status);
+    ck_assert_int_eq(1, s21_is_greater_or_equal(decimal, second_decimal));
+} END_TEST
+
 START_TEST(is_greater_0) {
     s21_decimal decimal;
     s21_decimal second_decimal;
@@ -163,6 +176,20 @@ START_TEST(is_less_or_equal_Classic) {
     ck_assert_int_eq(1, s21_is_less_or_equal(decimal, second_decimal));
 } END_TEST
 
+START_TEST(is_less_or_equal_Norm) {
+    s21_decimal decimal;
+    s21_decimal second_decimal;
+    init_decimal(&decimal);
+    init_decimal(&second_decimal);
+    int B = 5123;
+    int A = 51240;
+    convertation_result status = s21_from_int_to_decimal(A, &decimal);
+    convertation_result second_status = \
+    s21_from_int_to_decimal(B, &second_decimal);
+    ck_assert_int_eq(status, second_status);
+    ck_assert_int_eq(0, s21_is_less_or_equal(decimal, second_decimal));
+} END_TEST
+
         Suite* comparsion_suite(void) {
     Suite* s;
     TCase* tc_core;
@@ -178,10 +205,12 @@ START_TEST(is_less_or_equal_Classic) {
     tcase_add_test(tc_core, is_greater_stand);
     tcase_add_test(tc_core, is_greater_le);
     tcase_add_test(tc_core, is_greater_0);
+    tcase_add_test(tc_core, is_greater_eq);
     tcase_add_test(tc_core, is_less_Classic);
     tcase_add_test(tc_core, is_less_equal);
     tcase_add_test(tc_core, is_less_ne);
     tcase_add_test(tc_core, is_less_or_equal_Classic);
+    tcase_add_test(tc_core, is_less_or_equal_Norm);
     suite_add_tcase(s, tc_core);
 
     return s;
