@@ -1,7 +1,6 @@
 #include "s21_utility.h"
 
-int s21_mul_alt(s21_decimal_alt alt_value_1, \
-s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
+int s21_mul_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     int return_code = 0;
     s21_null_decimal_alt(alt_result);
     if (!is_null(alt_value_1) && !(is_null(alt_value_2))) {
@@ -22,8 +21,7 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
         alt_result -> sign = sign1 ^ sign2;
         if (last_bit(*alt_result) > 95 || alt_result -> exp > 28) {
             int mod = 0;
-            while ((last_bit(*alt_result) > 95 || alt_result ->  exp > 28) \
-            && alt_result -> exp > 0) {
+            while ((last_bit(*alt_result) > 95 || alt_result ->  exp > 28) && alt_result -> exp > 0) {
                 if (alt_result -> exp == 0)
                     break;
                 mod = div_by_ten(alt_result);

@@ -10,13 +10,11 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_null_decimal_alt(&alt_result);
     if (alt_value_1.sign == alt_value_2.sign) {
         if (s21_is_greater_or_equal(value_1, value_2)) {
-                return_code = \
-                s21_sub_alt(alt_value_1, alt_value_2, &alt_result);
+                return_code = s21_sub_alt(alt_value_1, alt_value_2, &alt_result);
             } else {
                 alt_value_1.sign = alt_value_1.sign ^ 1;
                 alt_value_2.sign = alt_value_2.sign ^ 1;
-                return_code = \
-                s21_sub_alt(alt_value_2, alt_value_1, &alt_result);
+                return_code = s21_sub_alt(alt_value_2, alt_value_1, &alt_result);
             }
         alt_result.sign = alt_value_1.sign;
     } else {
@@ -28,5 +26,3 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     *result = s21_convert_alt_to_std(alt_result);
     return return_code;
 }
-
-// сложение децималов

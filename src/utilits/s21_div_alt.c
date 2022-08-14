@@ -1,7 +1,6 @@
 #include "s21_utility.h"
 #include <stdio.h>
-int s21_div_alt(s21_decimal_alt alt_value_1, \
-s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
+int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     s21_decimal_alt ten;
     s21_null_decimal_alt(&ten);
     ten.bits[1] = 1;
@@ -36,8 +35,8 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     return return_code;
 }
 
-s21_decimal_alt div_with_modulo(s21_decimal_alt alt_value_1, \
-s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
+s21_decimal_alt div_with_modulo(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, \
+s21_decimal_alt *alt_result) {
     int denominator_left_bit = last_bit(alt_value_2);
     s21_decimal_alt modulo;
     s21_null_decimal_alt(&modulo);

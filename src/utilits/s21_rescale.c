@@ -9,8 +9,7 @@ void s21_rescale(s21_decimal *value_1, s21_decimal *value_2) {
 }
 
 // рескейл на уровне альтернативных децималов
-void s21_rescale_alt(s21_decimal_alt *alt_value_1, \
-s21_decimal_alt *alt_value_2) {
+void s21_rescale_alt(s21_decimal_alt *alt_value_1, s21_decimal_alt *alt_value_2) {
     s21_decimal_alt ten;
     s21_null_decimal_alt(&ten);
     ten.bits[1] = 1;
@@ -34,8 +33,7 @@ s21_decimal_alt *alt_value_2) {
     }
 }
 
-void s21_rescale_alt_to_smaller(s21_decimal_alt *alt_value_1, \
-s21_decimal_alt *alt_value_2) {
+void s21_rescale_alt_to_smaller(s21_decimal_alt *alt_value_1, s21_decimal_alt *alt_value_2) {
     int mod1 = 0, mod2 = 0;
     while (last_bit(*alt_value_2) > 95) {
         mod1 = div_by_ten(alt_value_1);
@@ -52,8 +50,7 @@ s21_decimal_alt *alt_value_2) {
 }
 
 // приводит exp к нулю, нужно для деления
-void s21_rescale_alt_to_zero(s21_decimal_alt *alt_value_1, \
-s21_decimal_alt *alt_value_2) {
+void s21_rescale_alt_to_zero(s21_decimal_alt *alt_value_1, s21_decimal_alt *alt_value_2) {
     s21_decimal_alt ten;
     s21_null_decimal_alt(&ten);
     ten.bits[1] = 1;
