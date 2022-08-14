@@ -26,3 +26,4 @@ Suite* other_suite(void) {
 
     return s;
 }
+

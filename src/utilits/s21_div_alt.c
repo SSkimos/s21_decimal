@@ -44,3 +44,4 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     }
     return alt_value_1;
 }
+

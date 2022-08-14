@@ -76,6 +76,6 @@ s21_decimal_alt *alt_value_2) {
     }
     // } else {
     //     alt_value_1 -> exp = 0;
-    //     alt_value_2 -> exp = 0;        
+    //     alt_value_2 -> exp = 0;
     // }
 }

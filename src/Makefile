@@ -1,9 +1,9 @@
-CC         = gcc
-SRC_DIR    = .
-TEST_DIR   = tests
-INC_DIRS  := $(shell find $(SRC_DIR) -type d)
-INC_FLAGS := $(addprefix -I, $(INC_DIRS))
-TEST_FLAGS  := --coverage -c -g
+CC          = gcc
+SRC_DIR     = .
+TEST_DIR    = tests
+INC_DIRS   := $(shell find $(SRC_DIR) -type d)
+INC_FLAGS  := $(addprefix -I, $(INC_DIRS))
+TEST_FLAGS := --coverage -c -g
 
 SRC  := $(shell find $(SRC_DIR) -name "s21*.c" | sed -e 's/\.\///')
 TEST := $(shell find $(TEST_DIR) -name "*.c" | sed -e 's/\.\///')
@@ -16,9 +16,9 @@ OBJS      := $(SRC:%.c=$(BUILD_DIR)/%.o)
 TEST_OBJS := $(TEST:%.c=$(BUILD_TEST_DIR)/%.o)
 GCOV_OBJS := $(SRC:%.c=$(GCOV_OBJ_DIR)/%.o)
 
-WARNING  = -Wall -Werror -Wextra
-CFLAGS   = $(INC_FLAGS) -std=c11 -pedantic $(WARNING)
-LFLAGS  ?= $(shell pkg-config --cflags --libs check)
+WARNING    = -Wall -Werror -Wextra
+CFLAGS     = -std=c11 -pedantic $(WARNING)
+LFLAGS    ?= $(shell pkg-config --cflags --libs check)
 INC_CHECK ?= $(shell pkg-config --cflags check)
 DEC_TEST  := decimal_test.c
 
@@ -60,7 +60,7 @@ $(GCOV_OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(TEST_FLAGS) -c $< -o $@
 
-.PHONY: clean 
+.PHONY: clean rebuild lint test
 clean: 
 	rm -f *.gcda *.gcov *.o *.gcno
 	rm -f s21_decimal.a
@@ -75,6 +75,6 @@ lint:
 	-cp ../materials/linters/CPPLINT.cfg .
 	-find . -type f -name "*.c" | xargs python3 ../materials/linters/cpplint.py --extensions=c
 	-find . -type f -name "*.h" | xargs python3 ../materials/linters/cpplint.py --extensions=c
-	-find . -type f -name "*.c" | xargs cppcheck --enable=all --suppress=missingIncludeSystem
+	#-find . -type f -name "*.c" | xargs cppcheck --enable=all --suppress=missingIncludeSystem
 	rm -f CPPLINT.cfg
 

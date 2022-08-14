@@ -20,7 +20,7 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
             new = src * (int)(pow(10, exp));
         }
         dst->bits[0] = new;
-        dst->bits[3] += exp << 15;
+        dst->bits[3] += exp << 16;
     } else {
         status = CONVERTATION_ERROR;
     }
