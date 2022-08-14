@@ -126,11 +126,34 @@ START_TEST(sub_with_dot) {
     init_decimal(&true_ans);
     true_ans.bits[0] = 607087404;
     true_ans.bits[1] = 123904785;
+    true_ans.bits[3] = 983040;  // 18 знаков после запятой
+    int status = s21_sub(dec1, dec2, &ans);
+    int true_status = 0;  // операция прошла успешно
+    ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
+    ck_assert_int_eq(status, true_status);
+} END_TEST
+
+START_TEST(sub_with_dot_2) {
+    s21_decimal dec1;
+    s21_decimal dec2;
+    s21_decimal ans;
+    s21_null_decimal(&dec1);
+    s21_null_decimal(&dec2);
+    s21_null_decimal(&ans);
+
+    dec1.bits[0] = 532167;
+    dec1.bits[3] = 196608;  // 3 знака после запятой
+
+    dec2.bits[0] = 0;
+    dec2.bits[3] = 0;  // 15 знаков после запятой
+
+    s21_decimal true_ans;
+    init_decimal(&true_ans);
+    true_ans.bits[0] = 532167;
+    true_ans.bits[3] = 196608;
 
     int status = s21_sub(dec1, dec2, &ans);
-
     int true_status = 0;  // операция прошла успешно
-
     ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
     ck_assert_int_eq(status, true_status);
 } END_TEST
@@ -227,6 +250,7 @@ Suite* sub_suite(void) {
     tcase_add_test(tc_core, basic_sub_3);
     tcase_add_test(tc_core, basic_sub_4);
     tcase_add_test(tc_core, sub_with_dot);
+    tcase_add_test(tc_core, sub_with_dot_2);
     tcase_add_test(tc_core, return_to_add);
     tcase_add_test(tc_core, return_to_add_2);
     tcase_add_test(tc_core, big_values_sub);

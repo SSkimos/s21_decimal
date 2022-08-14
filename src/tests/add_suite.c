@@ -136,6 +136,36 @@ START_TEST(basic_add_dot) {
     ck_assert_int_eq(status, true_status);
 } END_TEST
 
+START_TEST(basic_add_dot_2) {
+    s21_decimal dec1;
+    s21_decimal dec2;
+    s21_decimal ans;
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+
+    // 613478.421 + 2634871.723814 = 3248350.144814
+    // 613478.421
+    dec1.bits[0] = 613478421;
+    dec1.bits[3] = 196608;  // точка после третьего знака
+
+    // 2634871.723814  10 01100101   01111010 10010111 11010111 00100110
+    dec2.bits[0] = 0;
+    dec2.bits[3] = 393216;  // точка после шестого знака
+
+    //  3248350.144814 10 11110100   01010000 11000001 10101001 00101110
+
+    s21_decimal true_ans;
+    init_decimal(&true_ans);
+    true_ans.bits[0] = 613478421;
+
+    true_ans.bits[3] = 196608;  // точка после шестого знака
+
+    int status = s21_add(dec1, dec2, &ans);
+    int true_status = 0;  // операция прошла успешно
+
+    ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
+    ck_assert_int_eq(status, true_status);
+} END_TEST
 
 START_TEST(big_values_dot_overflow) {
     s21_decimal dec1;
@@ -270,6 +300,7 @@ Suite* add_suite(void) {
     tcase_add_test(tc_core, big_values_add_2);
     tcase_add_test(tc_core, big_values_overflow);
     tcase_add_test(tc_core, basic_add_dot);
+    tcase_add_test(tc_core, basic_add_dot_2);
     tcase_add_test(tc_core, big_values_dot_overflow);
     tcase_add_test(tc_core, return_to_sub);
     tcase_add_test(tc_core, return_to_sub_2);
