@@ -6,13 +6,16 @@
 
 // распечатка бинарной формы стандартного децимала
 // распечатываются склеенные второй, первый и нулевой бит
-// и через пробел -- третий бит
+// и через пробел -- третий бит с пробелом перед младшим словом
 void print_binary_representation_std(s21_decimal std) {
     for (int i = 2; i >= 0; i--)
         for (int j = 31; j >= 0; j--)
             printf("%i", s21_get_bit_int(std.bits[i], j));
     printf(" ");
-    for (int j = 31; j >= 0; j--)
+    for (int j = 31; j >= 16; j--)
+        printf("%i", s21_get_bit_int(std.bits[3], j));
+    printf(" ");
+    for (int j = 15; j >= 0; j--)
         printf("%i", s21_get_bit_int(std.bits[3], j));
     printf("\n");
 }
