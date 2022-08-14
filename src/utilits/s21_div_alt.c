@@ -13,29 +13,26 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     alt_value_2.sign = 0;
 
     s21_rescale_alt_to_zero(&alt_value_1, &alt_value_2);
-    // print_binary_representation_alt(alt_value_1);
-    // print_binary_representation_alt(alt_value_2);
     s21_decimal_alt modulo;
     s21_null_decimal_alt(&modulo);
     modulo = div_with_modulo(alt_value_1, alt_value_2, &alt_value_1);
-
+    int exp = 0;
+    int status;
     while (!is_null(alt_value_1) || !is_null(modulo)) {
+        exp++;
         s21_mul_alt(modulo, ten, &modulo);
-        // printf("\nmodulo:\n");
-        // print_binary_representation_alt(modulo);
-        // printf("result from last iteration:\n");
-        // print_binary_representation_alt(*alt_result);
-        // printf("mul by ten:\n");
-        // print_binary_representation_alt(*alt_result);
         s21_mul_alt(*alt_result, ten, alt_result);
-        s21_add_alt(*alt_result, alt_value_1, alt_result);
-        // printf("add previous result:\n");
-        // print_binary_representation_alt(*alt_result);
+        status = s21_add_alt(*alt_result, alt_value_1, alt_result);
         modulo = div_with_modulo(modulo, alt_value_2, &alt_value_1);
+        if (status == 1)
+            break;
     }
-    // printf("\n");
-    // printf("final result:\n");
-    // print_binary_representation_alt(*alt_result);
+    if (status == 1) {
+        int mod = div_by_ten(alt_result);
+        s21_bank_rounding(alt_result, mod);
+        exp--;
+    }
+    alt_result -> exp = exp - 1;
     return return_code;
 }
 
@@ -48,8 +45,6 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     if (compare_bits(alt_value_1, alt_value_2)) {
         align(&alt_value_1, &alt_value_2);
     }
-    // print_binary_representation_alt(alt_value_1);
-    // print_binary_representation_alt(alt_value_2);
     for (int i = 0; i < 191; i++) {
         if (compare_bits(alt_value_1, alt_value_2)) {
             s21_sub_alt(alt_value_1, alt_value_2, &alt_value_1);
@@ -60,9 +55,6 @@ s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
         if (last_bit(alt_value_2) > denominator_left_bit)
             s21_right_shift(&alt_value_2);
         s21_left_shift(alt_result);
-        // printf("\n");
-        // print_binary_representation_alt(alt_value_1);
-        // print_binary_representation_alt(alt_value_2);
     }
     return alt_value_1;
 }
