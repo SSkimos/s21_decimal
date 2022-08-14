@@ -9,8 +9,9 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     convertation_result status;
     if (dst) {
         status = CONVERTATION_OK;
+        int sign = 0;
         if (src < 0) {
-            s21_set_minus(dst);
+            sign = 1;
             src = -(src);
         }
         int new = (int)src;
@@ -20,6 +21,7 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
             new = src * (int)(pow(10, exp));
         }
         *dst = s21_convert_int_to_std(new);
+        if (sign) s21_set_minus(dst);
         dst->bits[3] += exp << 16;
     } else {
         status = CONVERTATION_ERROR;
