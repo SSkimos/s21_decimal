@@ -38,11 +38,11 @@ START_TEST(s21_negate_0) {
         ck_assert_int_eq(A, B);
 } END_TEST
 
-Suite* other_suite(void) {
+Suite* negate_suite(void) {
     Suite* s;
     TCase* tc_core;
 
-    s = suite_create("other");
+    s = suite_create("negate");
     tc_core = tcase_create("Core");
 
     tcase_add_test(tc_core, s21_negate_simple);

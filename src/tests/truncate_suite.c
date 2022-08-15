@@ -1,0 +1,50 @@
+#include "../utilits/s21_utility.h"
+#include "s21_decimal_test.h"
+#include "../s21_decimal.h"
+
+START_TEST(simple_truncate) {
+    // -39.104096094745301845239149102
+    // 01111110 01011010 00100110 01110000
+    // 11110011 01000010 11100010 00010000
+    // 00001010 10100100 00110010 00101110
+    // 10000000 00011011 00000000 00000000
+    s21_decimal dec;
+    init_decimal(&dec);
+    dec.bits[0] = 178532910;
+    dec.bits[1] = 4081246736;
+    dec.bits[2] = 2119837296;
+    dec.bits[3] = 2149253120;
+
+    s21_decimal ans;
+    init_decimal(&ans);
+
+    // -39
+    // 00000000 00000000 00000000 00000000
+    // 00000000 00000000 00000000 00000000
+    // 00000000 00000000 00000000 00100111
+    // 10000000 00000000 00000000 00000000
+    s21_decimal true_ans;
+    init_decimal(&true_ans);
+    true_ans.bits[0] = 39;
+    true_ans.bits[3] = MINUS_SIGN;
+
+    int status = s21_truncate(dec, &ans);
+    int true_status = 0;
+
+    ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
+    ck_assert_int_eq(status, true_status);    
+} END_TEST
+
+Suite* truncate_suite(void) {
+    Suite* s;
+    TCase* tc_core;
+
+    s = suite_create("truncate");
+    tc_core = tcase_create("Core");
+
+    tcase_add_test(tc_core, simple_truncate);
+    suite_add_tcase(s, tc_core);
+
+    return s;
+}
+

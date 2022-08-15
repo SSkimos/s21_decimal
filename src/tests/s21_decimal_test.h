@@ -10,5 +10,6 @@ Suite* add_suite(void);
 Suite* sub_suite(void);
 Suite* mul_suite(void);
 Suite* div_suite(void);
-Suite* other_suite(void);
+Suite* negate_suite(void);
+Suite* truncate_suite(void);
 #endif  // SRC_TESTS_S21_DECIMAL_TEST_H_

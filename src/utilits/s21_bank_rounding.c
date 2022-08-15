@@ -15,22 +15,8 @@ int div_by_ten(s21_decimal_alt *alt) {
     s21_null_decimal_alt(&ten);
     ten.bits[1] = 1;
     ten.bits[3] = 1;
-    while (compare_bits(*alt, ten))
-        s21_left_shift(&ten);
-    if (ten.bits[1] == 0)
-        s21_right_shift(&ten);
-    for (int i = 0; i < 191; i++) {
-        if (compare_bits(*alt, ten)) {
-            s21_sub_alt(*alt, ten, alt);
-            result.bits[0] = 1;
-        }
-        if (ten.bits[1] == 1)
-            break;
-        s21_right_shift(&ten);
-        s21_left_shift(&result);
-    }
-    int res = s21_convert_alt_to_std(*alt).bits[0];
-    *alt = result;
+    s21_decimal_alt modulo = div_with_modulo(*alt, ten, alt);
+    int res = s21_convert_alt_to_std(modulo).bits[0];
     // возможно, эта конструкция не нужна и есть решение получше
     alt -> exp = exp - 1;
     alt -> sign = sign;
