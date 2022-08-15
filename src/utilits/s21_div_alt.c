@@ -26,8 +26,9 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
         if (status == 1)
             break;
     }
+    int mod;
     if (status == 1) {
-        int mod = div_by_ten(alt_result);
+        mod = div_by_ten(alt_result);
         while (last_bit(*alt_result) > 95 && exp > 0) {
             mod = div_by_ten(alt_result);
             exp--;
@@ -36,10 +37,14 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
         exp--;
     }
     alt_result -> exp = exp - 1;
-    // это действительно рабочая проверка на переполнение по экспоненте
-    // не надо ее удалять
-    if (alt_result -> exp > 28)
-        return_code = 2;
+    if (alt_result -> exp > 28) {
+        while (alt_result -> exp > 28)
+            mod = div_by_ten(alt_result);
+        if (is_null(*alt_result))
+            return_code = 2;
+        else
+            s21_bank_rounding(alt_result, mod);
+    }
     if (last_bit(*alt_result) > 95)
         return_code = 1;
     alt_result -> sign = sign;
