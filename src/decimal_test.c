@@ -14,12 +14,14 @@ int main() {
     Suite *conv;
     Suite *negate;
     Suite *truncate;
+    Suite *mod;
     SRunner* runner;
     compare = comparsion_suite();
     add = add_suite();
     sub = sub_suite();
     mul = mul_suite();
     div = div_suite();
+    mod = mod_suite();
     conv = conversion_suite();
     negate = negate_suite();
     truncate = truncate_suite();
@@ -28,6 +30,7 @@ int main() {
     srunner_add_suite(runner, sub);
     srunner_add_suite(runner, mul);
     srunner_add_suite(runner, div);
+    srunner_add_suite(runner, mod);
     srunner_add_suite(runner, conv);
     srunner_add_suite(runner, negate);
     srunner_add_suite(runner, truncate);
