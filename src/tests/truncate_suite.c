@@ -32,7 +32,7 @@ START_TEST(simple_truncate) {
     int true_status = 0;
 
     ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
-    ck_assert_int_eq(status, true_status);    
+    ck_assert_int_eq(status, true_status);
 } END_TEST
 
 Suite* truncate_suite(void) {
