@@ -7,9 +7,9 @@ START_TEST(basic_sub) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
-    s21_null_decimal(&ans);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+    init_decimal(&ans);
 
     // 532167 - 123456 = 408711;
     dec1.bits[0] = 532167;
@@ -56,9 +56,9 @@ START_TEST(basic_sub_3) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
-    s21_null_decimal(&ans);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+    init_decimal(&ans);
 
     // -532167 - (-123456) = -408711;
     dec1.bits[0] = 532167;
@@ -84,8 +84,8 @@ START_TEST(basic_sub_4) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
     // -61287 - (-234787) = 173500
     dec1.bits[0] = 61287;
     dec1.bits[3] = MINUS_SIGN;
@@ -109,9 +109,9 @@ START_TEST(sub_with_dot) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
-    s21_null_decimal(&ans);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+    init_decimal(&ans);
 
     // 532.167 - 0.000000000001236 = 532.166999999998764 =
     // 111 01100010 10100011 00010001 00100100 00101111 01101011 00101100
@@ -137,9 +137,9 @@ START_TEST(sub_with_dot_2) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
-    s21_null_decimal(&ans);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+    init_decimal(&ans);
 
     dec1.bits[0] = 532167;
     dec1.bits[3] = 196608;  // 3 знака после запятой
@@ -163,8 +163,8 @@ START_TEST(return_to_add) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
     // -2361234 - 48695 = -2361234 + (-48695) = 2409929
     dec1.bits[0] = 2361234;
     dec1.bits[3] = MINUS_SIGN;
@@ -188,8 +188,8 @@ START_TEST(return_to_add_2) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
     // 6347852 - (-723184) = 6347852 + 723184 = 7071036
     dec1.bits[0] = 6347852;
 
@@ -212,8 +212,8 @@ START_TEST(big_values_sub) {
     s21_decimal dec1;
     s21_decimal dec2;
     s21_decimal ans;
-    s21_null_decimal(&dec1);
-    s21_null_decimal(&dec2);
+    init_decimal(&dec1);
+    init_decimal(&dec2);
 
     // пример из README
     dec1.bits[0] = 4294967295;

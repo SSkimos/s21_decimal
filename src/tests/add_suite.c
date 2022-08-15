@@ -189,7 +189,7 @@ START_TEST(big_values_dot_overflow) {
     dec2.bits[3] = 196608;  // точка после третьего знака
 
     s21_decimal true_ans;
-    s21_null_decimal(&true_ans);
+    init_decimal(&true_ans);
     true_ans.bits[0] = 2576980378;
     true_ans.bits[1] = 2576980377;
     true_ans.bits[2] = 429496729;
@@ -287,6 +287,34 @@ START_TEST(big_values_add_2) {
     ck_assert_int_eq(status, true_status);
 } END_TEST
 
+START_TEST(add_zero) {
+    s21_decimal dec1;
+    s21_decimal dec2;
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+    
+    dec1.bits[0] = 723947;
+    dec1.bits[1] = 839204;
+    dec1.bits[2] = 8239;
+
+    dec2.bits[3] = 1835008;
+
+    s21_decimal ans;
+    init_decimal(&ans);
+
+    int status = s21_add(dec1, dec2, &ans);
+
+    s21_decimal true_ans;
+    init_decimal(&true_ans);
+    true_ans.bits[0] = 723947;
+    true_ans.bits[1] = 839204;
+    true_ans.bits[2] = 8239;
+
+    int true_status = 0;
+    ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
+    ck_assert_int_eq(status, true_status);    
+}
+
 Suite* add_suite(void) {
     Suite* s;
     TCase* tc_core;
@@ -304,6 +332,7 @@ Suite* add_suite(void) {
     tcase_add_test(tc_core, big_values_dot_overflow);
     tcase_add_test(tc_core, return_to_sub);
     tcase_add_test(tc_core, return_to_sub_2);
+    tcase_add_test(tc_core, add_zero);
     suite_add_tcase(s, tc_core);
 
     return s;

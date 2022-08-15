@@ -28,11 +28,6 @@ int s21_get_exp_std(s21_decimal dec) {
     return (dec.bits[3] % 2147483648) >> 16;
 }
 
-void s21_null_decimal(s21_decimal *std) {
-    for (int i = 0; i < 4; i++)
-        std -> bits[i] = 0;
-}
-
 void s21_null_decimal_alt(s21_decimal_alt *alt) {
     alt -> sign = 0;
     alt -> exp = 0;

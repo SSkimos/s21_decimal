@@ -6,7 +6,7 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     if (value_2.bits[0] == 0 && value_2.bits[1] == 0 && value_2.bits[2] == 0) {
         return_code = 3;
     } else if (value_1.bits[0] == 0 && value_1.bits[1] == 0 && value_1.bits[2] == 0) {
-        s21_null_decimal(result);
+        init_decimal(result);
     } else {
         s21_decimal_alt alt_value_1 = s21_convert_std_to_alt(value_1);
         s21_decimal_alt alt_value_2 = s21_convert_std_to_alt(value_2);
@@ -17,9 +17,6 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             s21_right_shift(&alt_value_2);
         }
         return_code = s21_div_alt(alt_value_1, alt_value_2, &alt_result);
-        if (is_null(alt_result))
-            return_code = 2;  // делили одно число на второе
-            // получили что-то ничтожно маленькое
         *result = s21_convert_alt_to_std(alt_result);
     }
     return return_code;

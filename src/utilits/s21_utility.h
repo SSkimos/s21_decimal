@@ -7,7 +7,6 @@ void s21_right_shift(s21_decimal_alt *alt);
 void s21_left_shift(s21_decimal_alt *alt);
 bool s21_get_sign_std(s21_decimal dec);
 int s21_get_exp_std(s21_decimal dec);
-void s21_null_decimal(s21_decimal *std);
 void s21_null_decimal_alt(s21_decimal_alt *alt);
 s21_decimal_alt s21_convert_std_to_alt(s21_decimal std);
 s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt);

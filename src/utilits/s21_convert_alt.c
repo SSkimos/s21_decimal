@@ -15,7 +15,7 @@ s21_decimal_alt s21_convert_std_to_alt(s21_decimal std) {
 
 s21_decimal s21_convert_alt_to_std(s21_decimal_alt alt) {
     s21_decimal std;
-    s21_null_decimal(&std);
+    init_decimal(&std);
     int k = 95;
     for (int i = 2; i >= 0; i--)
         for (int j = 31; j >= 0; j--)
