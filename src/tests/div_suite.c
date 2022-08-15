@@ -141,7 +141,7 @@ START_TEST(result_too_big) {
     dec2.bits[0] = 1;
     dec2.bits[3] = 1179648;
 
-    int status = s21_div(dec1, dec2, &ans);   
+    int status = s21_div(dec1, dec2, &ans);
     int true_status = 1;
     ck_assert_int_eq(status, true_status);
 } END_TEST
@@ -181,7 +181,7 @@ START_TEST(big_values_div) {
     init_decimal(&true_ans);
     true_ans.bits[0] = 4294967295;
     true_ans.bits[1] = 4294967295;
-    true_ans.bits[2] = 4294967295;    
+    true_ans.bits[2] = 4294967295;
     int true_status = 0;
     ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
     ck_assert_int_eq(status, true_status);

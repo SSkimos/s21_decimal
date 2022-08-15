@@ -292,7 +292,7 @@ START_TEST(add_zero) {
     s21_decimal dec2;
     init_decimal(&dec1);
     init_decimal(&dec2);
-    
+
     dec1.bits[0] = 723947;
     dec1.bits[1] = 839204;
     dec1.bits[2] = 8239;
@@ -312,7 +312,7 @@ START_TEST(add_zero) {
 
     int true_status = 0;
     ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
-    ck_assert_int_eq(status, true_status);    
+    ck_assert_int_eq(status, true_status);
 }
 
 Suite* add_suite(void) {
