@@ -129,23 +129,23 @@ START_TEST(div_zero) {
     ck_assert_int_eq(status, true_status);
 } END_TEST
 
-// START_TEST(result_too_big) {
-//     s21_decimal dec1;
-//     s21_decimal dec2;
-//     s21_decimal ans;
-//     init_decimal(&dec1);
-//     init_decimal(&dec2);
-//     dec1.bits[0] = 4294967294;
-//     dec1.bits[1] = 4294967295;
-//     dec1.bits[2] = 4294967295;
-//     dec2.bits[0] = 1;
-//     dec2.bits[3] = 1179648;
+START_TEST(result_too_big) {
+    s21_decimal dec1;
+    s21_decimal dec2;
+    s21_decimal ans;
+    init_decimal(&dec1);
+    init_decimal(&dec2);
+    dec1.bits[0] = 4294967294;
+    dec1.bits[1] = 4294967295;
+    dec1.bits[2] = 4294967295;
+    dec2.bits[0] = 1;
+    dec2.bits[3] = 1179648;
 
-//     int status = s21_div(dec1, dec2, &ans);
-//     print_binary_representation_std(ans);    
-//     int true_status = 1;
-//     ck_assert_int_eq(status, true_status);
-// } END_TEST
+    int status = s21_div(dec1, dec2, &ans);
+    print_binary_representation_std(ans);    
+    int true_status = 1;
+    ck_assert_int_eq(status, true_status);
+} END_TEST
 
 START_TEST(result_too_small) {
     s21_decimal dec1;
@@ -179,8 +179,7 @@ Suite* div_suite(void) {
     tcase_add_test(tc_core, div_by_zero);
     tcase_add_test(tc_core, div_zero);
     tcase_add_test(tc_core, result_too_small);
-    // пока что не обрабатывала, нужно влезть в рескейл
-    // tcase_add_test(tc_core, result_too_big);
+    tcase_add_test(tc_core, result_too_big);
     suite_add_tcase(s, tc_core);
 
     return s;

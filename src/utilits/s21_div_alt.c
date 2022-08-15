@@ -1,5 +1,5 @@
 #include "s21_utility.h"
-#include <stdio.h>
+
 int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_decimal_alt *alt_result) {
     s21_decimal_alt ten;
     s21_null_decimal_alt(&ten);
@@ -28,10 +28,20 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
     }
     if (status == 1) {
         int mod = div_by_ten(alt_result);
+        while (last_bit(*alt_result) > 95 && exp > 0) {
+            mod = div_by_ten(alt_result);
+            exp--;
+        }
         s21_bank_rounding(alt_result, mod);
         exp--;
     }
     alt_result -> exp = exp - 1;
+    // это действительно рабочая проверка на переполнение по экспоненте
+    // не надо ее удалять
+    if (alt_result -> exp > 28)
+        return_code = 2;
+    if (last_bit(*alt_result) > 95)
+        return_code = 1;
     alt_result -> sign = sign;
     return return_code;
 }
