@@ -16,6 +16,7 @@ int main() {
     Suite *truncate;
     Suite *mod;
     Suite *round;
+    Suite *floor;
     SRunner* runner;
     compare = comparsion_suite();
     add = add_suite();
@@ -27,6 +28,7 @@ int main() {
     negate = negate_suite();
     truncate = truncate_suite();
     round = round_suite();
+    floor = floor_suite();
     runner = srunner_create(compare);
     srunner_add_suite(runner, add);
     srunner_add_suite(runner, sub);
@@ -37,6 +39,7 @@ int main() {
     srunner_add_suite(runner, negate);
     srunner_add_suite(runner, truncate);
     srunner_add_suite(runner, round);
+    srunner_add_suite(runner, floor);
     srunner_set_log(runner, "tests/test.log");
     srunner_run_all(runner, CK_NORMAL);
     no_failed = srunner_ntests_failed(runner);
