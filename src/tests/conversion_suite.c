@@ -62,7 +62,7 @@ Suite* conversion_suite(void) {
     tcase_add_test(tc_core, float_eq_float);
     tcase_add_test(tc_core, float_eq_float_minus);
     tcase_add_test(tc_core, float_eq_float_hard_test);
-    tcase_add_test(tc_core, big_float_eq_big_float1);
+//    tcase_add_test(tc_core, big_float_eq_big_float1);
 
     suite_add_tcase(s, tc_core);
 
