@@ -51,12 +51,164 @@ START_TEST(big_float_eq_big_float1) {
         ck_assert_double_eq(B, C);
 }
 
+START_TEST(int_decimal_int_1) {
+    s21_decimal decimal;
+    init_decimal(&decimal);
+    int i = INT32_MAX, res = 0;
+    s21_from_int_to_decimal(i, &decimal);
+    s21_from_decimal_to_int(decimal, &res);
+    ck_assert_int_eq(i, res);
+}
+
+START_TEST(int_decimal_int_2) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        int i = INT32_MIN, res = 0;
+        s21_from_int_to_decimal(i, &decimal);
+        s21_from_decimal_to_int(decimal, &res);
+        ck_assert_int_eq(i, res);
+}
+
+START_TEST(int_decimal_int_3) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        int i = 0, res = 0;
+        s21_from_int_to_decimal(i, &decimal);
+        s21_from_decimal_to_int(decimal, &res);
+        ck_assert_int_eq(i, res);
+}
+
+START_TEST(int_decimal_int_4) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        int i = -123456, res = 0;
+        s21_from_int_to_decimal(i, &decimal);
+        s21_from_decimal_to_int(decimal, &res);
+        ck_assert_int_eq(i, res);
+}
+
+START_TEST(int_decimal_int_5) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        int i = 987654, res = 0;
+        s21_from_int_to_decimal(i, &decimal);
+        s21_from_decimal_to_int(decimal, &res);
+        ck_assert_int_eq(i, res);
+}
+
+START_TEST(int_decimal_int_6) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        int i = -1, res = 0;
+        s21_from_int_to_decimal(i, &decimal);
+        s21_from_decimal_to_int(decimal, &res);
+        ck_assert_int_eq(i, res);
+}
+
+START_TEST(int_decimal_int_7) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        int i = 2, res = 0;
+        s21_from_int_to_decimal(i, &decimal);
+        s21_from_decimal_to_int(decimal, &res);
+        ck_assert_int_eq(i, res);
+}
+
+START_TEST(float_decimal_float_1) {
+    s21_decimal decimal;
+    init_decimal(&decimal);
+    float f = 1e-10, res = 0;
+    s21_from_float_to_decimal(f, &decimal);
+    s21_from_decimal_to_float(decimal, &res);
+    ck_assert_float_eq(f, res);
+}
+
+//START_TEST(float_decimal_float) {
+//        s21_decimal a;
+//        s21_decimal_null(&a);
+//        float f = 1e-10, res = 0;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = -3e-25;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = 0;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = 7.9e28;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = -7.9e28;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = 123456.789;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = -23e9;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = 123e-5;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = -0.01234567898766;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = 33333333333;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = -0;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = DECIMAL_MIN;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//
+//        f = -DECIMAL_MIN;
+//        s21_from_float_to_decimal(f, &a);
+//        s21_from_decimal_to_float(a, &res);
+//        ck_assert_float_eq(f, res);
+//}
+//END_TEST
+
 Suite* conversion_suite(void) {
     Suite* s;
     TCase* tc_core;
 
     s = suite_create("conversion");
     tc_core = tcase_create("Core");
+
+    tcase_add_test(tc_core, int_decimal_int_1);
+    tcase_add_test(tc_core, int_decimal_int_2);
+    tcase_add_test(tc_core, int_decimal_int_3);
+    tcase_add_test(tc_core, int_decimal_int_4);
+    tcase_add_test(tc_core, int_decimal_int_5);
+    tcase_add_test(tc_core, int_decimal_int_6);
+    tcase_add_test(tc_core, int_decimal_int_7);
+
+    tcase_add_test(tc_core, float_decimal_float_1);
 
     tcase_add_test(tc_core, from_float_to_decimal_simple);
     tcase_add_test(tc_core, float_eq_float);

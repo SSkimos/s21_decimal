@@ -21,7 +21,10 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
             new = src * (int)(pow(10, exp));
         }
         *dst = s21_convert_int_to_std(new);
-        if (sign) s21_set_minus(dst);
+        if (sign) {
+            s21_set_minus(dst);
+            printf("aboba\n");
+        }
         dst->bits[3] += exp << 16;
     } else {
         status = CONVERTATION_ERROR;
