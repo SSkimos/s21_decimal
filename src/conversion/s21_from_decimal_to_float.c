@@ -7,7 +7,7 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
     convertation_result status;
     if (dst) {
         status = CONVERTATION_OK;
-        int exp = src.bits[3] & 8355840;
+        long int exp = src.bits[3] & 8355840;
         exp >>= 16;
         *dst = (float)(src.bits[0] / pow(10, exp));
         double ans = s21_convert_std_to_int(src);
@@ -18,7 +18,6 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
         if (s21_get_sign_std(src)) {
             ans = -ans;
         }
-        printf("f = %f, exp = %d, dst = %f\n", ans, exp, *dst);
     } else {
         status = CONVERTATION_ERROR;
     }

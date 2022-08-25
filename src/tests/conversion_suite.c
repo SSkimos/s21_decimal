@@ -117,29 +117,45 @@ START_TEST(int_decimal_int_7) {
 START_TEST(float_decimal_float_1) {
     s21_decimal decimal;
     init_decimal(&decimal);
-    float f = 1e-10, res = 0;
+    float f = 0.0000000001, res = 0;
     s21_from_float_to_decimal(f, &decimal);
     s21_from_decimal_to_float(decimal, &res);
     ck_assert_float_eq(f, res);
 }
 
+START_TEST(float_decimal_float_2) {
+    s21_decimal decimal;
+    init_decimal(&decimal);
+    float f = -3.0, res = 0;
+    s21_from_float_to_decimal(f, &decimal);
+    s21_from_decimal_to_float(decimal, &res);
+    ck_assert_float_eq(f, res);
+}
+
+START_TEST(float_decimal_float_3) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        float f = 0, res = 0;
+        s21_from_float_to_decimal(f, &decimal);
+        s21_from_decimal_to_float(decimal, &res);
+        ck_assert_float_eq(f, res);
+}
+
+START_TEST(float_decimal_float_4) {
+        s21_decimal decimal;
+        init_decimal(&decimal);
+        float f = 7.9e28, res = 0;
+        s21_from_float_to_decimal(f, &decimal);
+        s21_from_decimal_to_float(decimal, &res);
+        ck_assert_float_eq(f, res);
+}
+
 //START_TEST(float_decimal_float) {
-//        s21_decimal a;
-//        s21_decimal_null(&a);
-//        float f = 1e-10, res = 0;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
 //
-//        f = -3e-25;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
 //
-//        f = 0;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
+//
+//
+//
 //
 //        f = 7.9e28;
 //        s21_from_float_to_decimal(f, &a);
@@ -209,6 +225,9 @@ Suite* conversion_suite(void) {
     tcase_add_test(tc_core, int_decimal_int_7);
 
     tcase_add_test(tc_core, float_decimal_float_1);
+    tcase_add_test(tc_core, float_decimal_float_2);
+    tcase_add_test(tc_core, float_decimal_float_3);
+    tcase_add_test(tc_core, float_decimal_float_4);
 
     tcase_add_test(tc_core, from_float_to_decimal_simple);
     tcase_add_test(tc_core, float_eq_float);
