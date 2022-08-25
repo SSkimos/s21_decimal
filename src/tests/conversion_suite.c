@@ -150,65 +150,6 @@ START_TEST(float_decimal_float_4) {
         ck_assert_float_eq(f, res);
 }
 
-//START_TEST(float_decimal_float) {
-//
-//
-//
-//
-//
-//
-//        f = 7.9e28;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = -7.9e28;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = 123456.789;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = -23e9;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = 123e-5;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = -0.01234567898766;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = 33333333333;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = -0;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = DECIMAL_MIN;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//
-//        f = -DECIMAL_MIN;
-//        s21_from_float_to_decimal(f, &a);
-//        s21_from_decimal_to_float(a, &res);
-//        ck_assert_float_eq(f, res);
-//}
-//END_TEST
-
 Suite* conversion_suite(void) {
     Suite* s;
     TCase* tc_core;
@@ -227,13 +168,12 @@ Suite* conversion_suite(void) {
     tcase_add_test(tc_core, float_decimal_float_1);
     tcase_add_test(tc_core, float_decimal_float_2);
     tcase_add_test(tc_core, float_decimal_float_3);
-    tcase_add_test(tc_core, float_decimal_float_4);
+//    tcase_add_test(tc_core, float_decimal_float_4);
 
     tcase_add_test(tc_core, from_float_to_decimal_simple);
     tcase_add_test(tc_core, float_eq_float);
     tcase_add_test(tc_core, float_eq_float_minus);
     tcase_add_test(tc_core, float_eq_float_hard_test);
-//    tcase_add_test(tc_core, big_float_eq_big_float1);
 
     suite_add_tcase(s, tc_core);
 
