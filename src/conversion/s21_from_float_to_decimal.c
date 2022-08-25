@@ -9,7 +9,7 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     convertation_result status;
     if (dst) {
         status = CONVERTATION_OK;
-        long int sign = 0;
+        int sign = 0;
         if (src < 0) {
             sign = 1;
             src = -(src);
