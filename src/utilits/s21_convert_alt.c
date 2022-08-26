@@ -75,7 +75,5 @@ long int s21_convert_alt_to_int(s21_decimal_alt alt) {
             result += (pow(2, (i)));
         }
     }
-    //0000100010101
-    //0 2 4 8
     return result;
 }
