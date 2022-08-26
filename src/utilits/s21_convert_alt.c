@@ -59,21 +59,3 @@ s21_decimal_alt s21_convert_int_to_alt(unsigned long int number) {
     return alt;
 }
 
-long int s21_convert_std_to_int(s21_decimal decimal) {
-    s21_decimal_alt alt;
-    s21_null_decimal_alt(&alt);
-    alt = s21_convert_std_to_alt(decimal);
-    long int result = s21_convert_alt_to_int(alt);
-    return result;
-}
-
-long int s21_convert_alt_to_int(s21_decimal_alt alt) {
-    long int result = 0;
-    print_binary_representation_alt(alt);
-    for (int i = 0; i <= 96; i++) {
-        if (alt.bits[i] == 1) {
-            result += (pow(2, (i)));
-        }
-    }
-    return result;
-}
