@@ -152,7 +152,7 @@ START_TEST(floor_on_int) {
 
     ck_assert_int_eq(1, s21_is_equal(ans, true_ans));
     ck_assert_int_eq(status, true_status);
-}
+} END_TEST
 
 Suite* floor_suite(void) {
     Suite* s;
