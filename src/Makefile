@@ -25,7 +25,7 @@ DEC_TEST  := decimal_test.c
 
 all: s21_decimal.a test
 
-test: $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o
+test: s21_decimal.a $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o
 	$(CC) $(LFLAGS) $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test.out
 	./test.out
 
