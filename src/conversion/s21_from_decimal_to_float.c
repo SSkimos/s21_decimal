@@ -13,11 +13,6 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
         if (s21_get_sign_std(src)) {
             *dst = -*dst;
         }
-        // double ans = s21_convert_std_to_int(src);
-        // while(exp > 0) {
-        //     ans /= 10;
-        //     exp--;
-        // }
     } else {
         status = CONVERTATION_ERROR;
     }

@@ -168,7 +168,6 @@ Suite* conversion_suite(void) {
     tcase_add_test(tc_core, float_decimal_float_1);
     tcase_add_test(tc_core, float_decimal_float_2);
     tcase_add_test(tc_core, float_decimal_float_3);
-//    tcase_add_test(tc_core, float_decimal_float_4);
 
     tcase_add_test(tc_core, from_float_to_decimal_simple);
     tcase_add_test(tc_core, float_eq_float);
