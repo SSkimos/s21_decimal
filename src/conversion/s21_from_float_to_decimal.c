@@ -32,6 +32,6 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
 }
 
 void s21_set_minus(s21_decimal *dst) {
-    dst->bits[3] = 1 << 31;
+    dst->bits[3] = 1U << 31;
 }
 

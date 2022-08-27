@@ -6,8 +6,7 @@ START_TEST(from_float_to_decimal_simple) {
     s21_decimal decimal;
     init_decimal(&decimal);
     float number = 100.5;
-    convertation_result result = s21_from_float_to_decimal(number, &decimal);
-    ck_assert_int_eq(result, 0);
+    s21_from_float_to_decimal(number, &decimal);
 } END_TEST
 
 START_TEST(float_eq_float) {
@@ -15,7 +14,7 @@ START_TEST(float_eq_float) {
     init_decimal(&decimal);
     float A = 100.5;
     float B = 0.0;
-    convertation_result status = s21_from_float_to_decimal(A, &decimal);
+    s21_from_float_to_decimal(A, &decimal);
     s21_from_decimal_to_float(decimal, &B);
     ck_assert_float_eq(A, B);
 } END_TEST
@@ -25,7 +24,7 @@ START_TEST(float_eq_float_minus) {
     init_decimal(&decimal);
     float A = -100.5;
     float B = 0.0;
-    convertation_result status = s21_from_float_to_decimal(A, &decimal);
+    s21_from_float_to_decimal(A, &decimal);
     s21_from_decimal_to_float(decimal, &B);
     ck_assert_float_eq(A, B);
 } END_TEST
@@ -35,20 +34,9 @@ START_TEST(float_eq_float_hard_test) {
     init_decimal(&decimal);
     float A = -1000.201;
     float B = 0.0;
-    convertation_result status = s21_from_float_to_decimal(A, &decimal);
+    s21_from_float_to_decimal(A, &decimal);
     s21_from_decimal_to_float(decimal, &B);
     ck_assert_float_eq(A, B);
-} END_TEST
-
-START_TEST(big_float_eq_big_float1) {
-    s21_decimal decimal;
-    init_decimal(&decimal);
-    float A = 4294967295.000000;
-    float B = 4294967295.000000;
-    float C = 0.0;
-    operation_result res = s21_from_float_to_decimal(A, &decimal);
-    s21_from_decimal_to_float(decimal, &C);
-    ck_assert_double_eq(B, C);
 } END_TEST
 
 START_TEST(int_decimal_int_1) {
