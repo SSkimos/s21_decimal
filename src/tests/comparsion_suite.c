@@ -125,13 +125,13 @@ START_TEST(is_less_ne) {
     s21_decimal second_decimal;
     init_decimal(&decimal);
     init_decimal(&second_decimal);
-    int A = 5124;
-    int B = 5123;
+    int A = -5124;
+    int B = -5123;
     convertation_result status = s21_from_int_to_decimal(A, &decimal);
     convertation_result second_status = \
                                         s21_from_int_to_decimal(B, &second_decimal);
     ck_assert_int_eq(status, second_status);
-    ck_assert_int_eq(0, s21_is_less(decimal, second_decimal));
+    ck_assert_int_eq(1, s21_is_less(decimal, second_decimal));
 } END_TEST
 
 START_TEST(is_less_equal) {

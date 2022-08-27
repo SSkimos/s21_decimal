@@ -3,13 +3,9 @@
 
 int s21_is_equal(s21_decimal a, s21_decimal b) {
     int equal = 1;
-    int aSign = 0, bSign = 0;
-    if (s21_get_sign_std(a)) {
-        aSign = 1;
-    }
-    if (s21_get_sign_std(b)) {
-        bSign = 1;
-    }
+    bool aSign = 0, bSign = 0;
+    aSign = s21_get_sign_std(a);
+    bSign = s21_get_sign_std(b);
     if (aSign != bSign) {
         equal = 0;
     } else {
