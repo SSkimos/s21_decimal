@@ -3,10 +3,16 @@
 
 int s21_is_equal(s21_decimal a, s21_decimal b) {
     int equal = 1;
-    bool aSign = 0, bSign = 0;
-    aSign = s21_get_sign_std(a);
-    bSign = s21_get_sign_std(b);
-    if (aSign != bSign) {
+    int zero_sign = 0;
+    if ((a.bits[0] + a.bits[1] + a.bits[2]) == 0 \
+            && (b.bits[0] + b.bits[1] + b.bits[2]) == 0) {
+        zero_sign = 1;
+    }
+    bool aSign = s21_get_sign_std(a);
+    bool bSign = s21_get_sign_std(b);
+    if (zero_sign) {
+        equal = 1;
+    } else if (aSign != bSign) {
         equal = 0;
     } else {
         s21_rescale(&a, &b);

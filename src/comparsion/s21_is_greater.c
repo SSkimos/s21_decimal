@@ -3,10 +3,17 @@
 
 int s21_is_greater(s21_decimal a, s21_decimal b) {
     int greater = 0;
+    int zero_sign = 0;
     bool aSign = 0, bSign = 0;
+    if ((a.bits[0] + a.bits[1] + a.bits[2]) == 0 \
+            && (b.bits[0] + b.bits[1] + b.bits[2]) == 0) {
+        zero_sign = 1;
+    }
     aSign = s21_get_sign_std(a);
     bSign = s21_get_sign_std(b);  // if their signs are not matching = they are ne
-    if ((aSign == 0) && (bSign == 1)) {
+    if (zero_sign) {
+        greater = 0;
+    } else if ((aSign == 0) && (bSign == 1)) {
         greater = 1;
     } else if ((aSign == 1) && (bSign == 0)) {
         greater = 0;
