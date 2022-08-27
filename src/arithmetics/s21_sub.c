@@ -9,7 +9,8 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_decimal_alt alt_result;
     s21_null_decimal_alt(&alt_result);
     if (alt_value_1.sign == alt_value_2.sign) {
-        if (s21_is_greater_or_equal(value_1, value_2)) {
+        if (s21_is_greater_or_equal(value_1, value_2) && alt_value_1.sign || \
+        s21_is_less_or_equal(value_1, value_2) && !alt_value_1.sign) {
                 return_code = s21_sub_alt(alt_value_1, alt_value_2, &alt_result);
             } else {
                 alt_value_1.sign = alt_value_1.sign ^ 1;
