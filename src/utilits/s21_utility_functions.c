@@ -47,8 +47,9 @@ void init_decimal(s21_decimal *decimal) {
 // 0 если второе число больше первого
 bool compare_bits(s21_decimal_alt alt1, s21_decimal_alt alt2) {
     int i = 191;
-    while (alt1.bits[i] == alt2.bits[i] && i >= 0)
+    while (i >= 0 && alt1.bits[i] == alt2.bits[i])  {
         i--;
+    }
     return i == -1 ? 1 : alt1.bits[i];
 }
 
