@@ -16,7 +16,7 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
     s21_null_decimal_alt(&modulo);
     modulo = div_with_modulo(alt_value_1, alt_value_2, &alt_value_1);
     int exp = 0;
-    int status;
+    int status = 0;
     while (!is_null(alt_value_1) || !is_null(modulo)) {
         exp++;
         s21_mul_alt(modulo, ten, &modulo);
@@ -37,14 +37,13 @@ int s21_div_alt(s21_decimal_alt alt_value_1, s21_decimal_alt alt_value_2, s21_de
         exp--;
     }
     alt_result -> exp = exp - 1;
-    if (alt_result -> exp > 28) {
-        while (alt_result -> exp > 28)
-            mod = div_by_ten(alt_result);
-        if (is_null(*alt_result))
-            return_code = 2;
-        else
-            s21_bank_rounding(alt_result, mod);
-    }
+    mod = 10;
+    while (alt_result -> exp > 28)
+        mod = div_by_ten(alt_result);
+    if (is_null(*alt_result))
+        return_code = 2;
+    else if (mod != 10)
+        s21_bank_rounding(alt_result, mod);
     if (last_bit(*alt_result) > 95)
         return_code = 1;
     alt_result -> sign = sign;
