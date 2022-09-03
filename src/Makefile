@@ -10,11 +10,9 @@ TEST := $(shell find $(TEST_DIR) -name "*.c" | sed -e 's/\.\///')
 
 BUILD_DIR      = obj
 BUILD_TEST_DIR = obj_test
-GCOV_OBJ_DIR  := gcov_res
 
 OBJS      := $(SRC:%.c=$(BUILD_DIR)/%.o)
 TEST_OBJS := $(TEST:%.c=$(BUILD_TEST_DIR)/%.o)
-GCOV_OBJS := $(SRC:%.c=$(GCOV_OBJ_DIR)/%.o)
 
 WARNING    = -Wall -Werror -Wextra
 CFLAGS     = -std=c11 -pedantic $(WARNING)
@@ -33,16 +31,6 @@ s21_decimal.a: $(OBJS)
 	@mkdir -p $(BUILD_DIR)
 	ar rc s21_decimal.a $(OBJS)
 	ranlib s21_decimal.a
-
-gcov_report: $(TEST_OBJS) $(GCOV_OBJS) $(BUILD_TEST_DIR)/main.o $(SRC)
-	@mkdir -p $(GCOV_OBJ_DIR)
-	ar rc s21_decimal.a $(GCOV_OBJS)
-	ranlib s21_decimal.a
-	$(CC) $(LFLAGS) --coverage $(TEST_OBJS) $(BUILD_TEST_DIR)/main.o s21_decimal.a -o test.out
-	- ./test.out
-	./../materials/lcov/bin/lcov -f -c --directory . -o ./gcov_res/coverage.info 
-	./../materials/lcov/bin/genhtml gcov_res/coverage.info --output-directory=gcov_res
-	open gcov_res/index.html
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
