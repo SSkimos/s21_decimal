@@ -19,7 +19,7 @@ int s21_is_greater(s21_decimal a, s21_decimal b) {
         greater = 0;
     } else if (aSign == bSign) {
         s21_rescale(&a, &b);
-        for (register int i = 0; i <= 2; i++) {
+        for (register int i = 2; i >= 0; i--) {
             if (a.bits[i] > b.bits[i]) {
                 greater = (aSign == 1) ? 0 : 1;
                 break;
